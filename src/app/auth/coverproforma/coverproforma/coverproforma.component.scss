@@ -1,0 +1,24 @@
+.back{
+    width: 100vw;
+    height: 100vh;
+    
+    background-image:url("/assets/img/servicios1.jpg");
+    text-align: center !important;
+    background-size: cover;
+  background-repeat:no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+
+  background-color: rgba(18, 19, 20, 0.644);
+  background-blend-mode: soft-light;
+}
+.h5{
+    font-size: calc(1.375rem + 1.5vw);
+}
+
+.lead{
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+

@@ -1,0 +1,28 @@
+.mat-form-field {
+    margin-top: 16px;
+}
+
+ul{
+  list-style: none;
+}
+
+.disabled{
+  display: none;
+}
+
+.mapa{
+  height: 75vh !important;
+  width: auto !important;
+  border: 1px solid black;
+  // font-size: 45px;
+}
+.mapa-resize{
+  height: 75vh !important;
+  width: 77vw !important;
+  border: 1px solid black;
+  // font-size: 45px;
+}
+
+.auto-height{
+  height: auto !important;
+}

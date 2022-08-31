@@ -1,0 +1,137 @@
+<mat-drawer-container class="example-container" width="790" height="100vh" style="height: 100%" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+    <div class="d-flex flex-column flex-shrink-0 p-5 text-white bg-dark" style="height: 100vh;">
+      <div class="row" style="display: block;">
+        <div class="col text-center">
+
+          <p-avatar
+              [image]="mostrarImagen"
+              alt="no photo " shape="circle" size="xlarge"></p-avatar>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="d-flex justify-content-center">
+
+          <span style="font-size:18px; display: block;">{{nombre}}</span>
+        </div>
+        <div class="d-flex justify-content-center">
+          <small style="font-size: 13px;" class="mt-1">Asilo</small>
+        </div>
+
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mt-4" routerLink="/asilo/profile">
+          <a routerLink="/asilo/profile" class="nav-link active" aria-current="page">
+            <i class="pi pi-user me-3"></i>
+            Perfil
+          </a>
+        </li>
+        <li class="nav-item mt-4" *ngIf="!aprobado">
+          <a routerLink="/asilo/regis-asi" class="nav-link active">
+            <i class="pi pi-file me-3"></i>
+            Afiliación
+          </a>
+        </li>
+        <li class="nav-item mt-4" *ngIf="aprobado">
+          <a routerLink="/asilo/info" class="nav-link active">
+            <i class="pi pi-user me-3"></i>
+            <span style="font-size: 15px;">
+              Información general
+            </span>
+          </a>
+        </li>
+        <li class="nav-item mt-4">
+          <a [routerLink]="['/asilo/mensajes/', uid]" class="nav-link active">
+            <i class="pi pi-user me-3"></i>
+            <span style="font-size: 15px;">
+              Mensajes
+            </span>
+          </a>
+        </li>
+
+
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" role="button"
+          id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <p-avatar
+              [image]="mostrarImagen"
+              alt="no photo " shape="circle" class="ms-3"></p-avatar>
+          <strong class="ps-2">Cerrar Sesion</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+
+          <li (click)="cerrar()"><a class="dropdown-item btn">Cerrar Sesion</a></li>
+        </ul>
+      </div>
+    </div>
+  </mat-drawer>
+
+
+  <div class="example-sidenav-content">
+    <mat-toolbar color="primary">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+        <!-- <i class="pi pi-bars"></i> -->
+      </button>
+
+    </mat-toolbar>
+
+  </div>
+  <div class="d-flex justify-content-center align-items-center" *ngIf="dataMensajes.length === 0">
+    <div>
+      <img src="assets/img/nomsj.png" loading="lazy" alt="no mensajes" />
+    </div>
+  </div>
+  <div class="row" *ngIf="dataMensajes.length === 0">
+    <div class="col text-center">
+      <h3><b>No tienes mensajes, todavia</b></h3>
+    </div>
+  </div>
+  <div class="row" *ngIf="dataMensajes.length === 0">
+    <div class="col text-center">
+      <div class="d-flex justify-content-center">
+
+        <p style="width: 50%">Parece que no has tenido ninguna conversacion todavia con los usuarios, sobre algún servicio, horario u otro interes. </p>
+      </div>
+
+    </div>
+  </div>
+  <div class="row" style="max-width: 101% !important;" *ngIf="dataMensajes.length > 0">
+    <div class="col-md-3 ">
+      <div class="row" style="border-bottom: 1px solid #ccc; cursor: pointer;" *ngFor="let f of dataMensajes" (click)="abrirMensajes(f.id)">
+        <div class="col-md-3">
+          <p-avatar [image]="f.foto" size="large" shape="circle"></p-avatar>
+        </div>
+        <div class="col text-start">
+          <div class="row">
+            <div class="col" style="font-weight: 600; font-size: 15px;">
+              Usuario
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <span style="color: #777; font-size:13px;">{{ f.mensajes[f.mensajes.length - 1].mensaje | slice:0:6
+                }}.....</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1 mt-3 me-1">
+          <i [class]="mostrarMensajes ? 'pi pi-chevron-left': 'pi pi-chevron-right'" style="color: #999"></i>
+
+        </div>
+
+
+
+      </div>
+    </div>
+    <div class="col border" style="min-height: 90vh !important;">
+      <app-content [uid]="uid" [id]="id" *ngIf="mostrarMensajes" (nomostrar)="cambiarValorMostrar($event)" #mensajesContent></app-content>
+    </div>
+  </div>
+
+</mat-drawer-container>

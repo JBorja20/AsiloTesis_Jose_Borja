@@ -1,0 +1,260 @@
+.avenue-messenger{
+    opacity: 1;
+    border-radius: 20px;
+    height: calc(100% - 60px);
+    max-height: 460px !important;
+    min-height: 220px !important;
+    width: 320px;
+    background: rgba(255,255,255,0.9);
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    margin: auto;
+    z-index: 10;
+    box-shadow: 2px 5px 40px rgba(22,20,19,04);
+    transition: 0.3s all ease-out 0.1s, transform 0.2s ease-in;
+}
+
+.avenue-messenger div.foto{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    justify-content: center;
+    display: flex;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+    background: transparent;
+    z-index: 12;
+    // border: 1px solid #ccc;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.circular{
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin: 1rem auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 99em;
+    border: 2px solid #fff;
+    // position: absolute;
+}
+
+.mitad{
+    // border: 1px solid black;
+    height: 40px;
+    position: absolute;
+    top: -55px;
+}
+
+.chat{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 40px);
+    // border: 1px solid black;
+    // margin-top: 8px;
+    z-index: 10;
+    overflow: hidden;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.chat-title{
+    flex: 0 1 45px;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    // color: #777;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 8px;
+    
+}
+
+.messages{
+    flex: 1 1 auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+}
+
+.messages .contenido-mensaje{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 99.4%;
+    width: 100%;
+    scrollbar-color: rgb(173, 172, 172) white;
+    scrollbar-width: thin;
+    // border: 1px solid black;
+}
+/* scrollbar para navegadores basados en chrome inicio */
+.contenido-mensaje::-webkit-scrollbar{
+  width: 8px;
+}
+
+.contenido-mensaje::-webkit-scrollbar-track{
+  background: white;
+}
+
+.contenido-mensaje::-webkit-scrollbar-thumb{
+  background-color: rgb(173, 172, 172);
+  border-radius: 20px;
+  border: 3px solid rgb(173, 172, 172);;
+}
+
+
+/* fin */
+.message-box{
+    flex:0 1 42px;
+    width: 90%;
+    background: #fff;
+    margin:  2px auto;
+    // padding: 10px;
+    position: relative;
+    border-radius: 20px;
+    height: 14px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    padding-top: 1px;
+    padding-left: 2px;
+}
+
+.message-box .message-input{
+    background: none;
+    border: none;
+    outline: none !important;
+    resize: none;
+    font-size: 15px;
+    height: 28px;
+    margin: 0;
+    padding-right: 15px;
+    margin-left: 8px;
+    margin-top: 5px;
+    width: 250px;
+    color: #444;
+}
+
+/* textarea::placeholder{
+    // margin-top: 15px;
+    padding-top: 6px;
+    padding-left: 5px;
+    // color: red;
+} */
+.message-box .message-submit {
+    position: absolute;
+    z-index: 1;
+    top: 9px;
+    right: 10px;
+    color: #4A90E2;
+    border: none;
+   /* background: #c29d5f;*/
+    background: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 5px;
+    outline: none!important;
+    transition: background .2s ease;
+    cursor:pointer;
+    &:hover {
+      background: #fff;
+      color: #333;
+    }
+  }
+
+/* iniciar chat */
+
+.iniciar-chat{
+    opacity: 1;
+    border-radius: 20px;
+    height: calc(100% - 60px);
+    max-height: 250px !important;
+    min-height: 220px !important;
+    width: 320px;
+    background: rgba(255,255,255,0.9);
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    // margin: auto;
+    z-index: 10;
+    box-shadow: 2px 5px 40px rgba(22,20,19,04);
+    // transition: 0.3s all ease-out 0.1s, transform 0.2s ease-in;
+}
+
+.button{
+    width: 100%;
+}
+
+.cerrar{
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    top: -15px;
+}
+
+.message-asilo{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    // border: 1px solid black;
+    height: calc(100% - 60px);
+    width: 320px;
+    max-height: 510px !important;
+    min-height: 220px !important;
+  }
+  .fab-button-message{
+    height: auto;
+    // border: 1px solid black;
+  }
+  
+  .message-asilo-fab-button{
+    position: inherit;
+    bottom: inherit;
+    right: inherit;
+  }
+  
+  .mostrar{
+    animation: fadein 1s;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 1s;
+  }
+  
+  .no-mostrar{
+    animation: fadeout 2s;
+    -webkit-animation: fadeout 2s;
+    -moz-animation: fadein 1s;
+  }
+  
+  
+  @keyframes fadein {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+  }
+  
+  @keyframes fadeout {
+    100%{
+      opacity: 1;
+    }
+    50%{
+      opacity: 0.5;
+    }
+    0%{
+      opacity: 0;
+    }
+  }
+

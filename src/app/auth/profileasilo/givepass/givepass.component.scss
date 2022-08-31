@@ -1,0 +1,52 @@
+ul{
+    list-style: none;
+}
+
+.example-tree-invisible {
+    display: none;
+}
+
+.mapa{
+    height: 75vh !important;
+    width: auto !important;
+    border: 1px solid black;
+    // font-size: 45px;
+  }
+  .mapa-resize{
+    height: 75vh !important;
+    width: 77vw !important;
+    border: 1px solid black;
+    // font-size: 45px;
+  }
+  
+
+
+.info__asilo{
+    border: solid 1px #ccc;
+    height: 80px;
+    
+}
+
+.info__asilo__label{
+    margin-top: -17px;
+    background: white;
+    width: 40%;
+    text-align: center;
+}
+.label__padding{
+    padding-left: 15px;
+}
+
+.width__select{
+    width: 30%;
+}
+
+.info__asilo__expand{
+    border: solid 1px #ccc;
+    height: auto;
+}
+
+.info__asilo__expand__content{
+    // border: solid 1px #ccc;
+    height: 45px;
+}

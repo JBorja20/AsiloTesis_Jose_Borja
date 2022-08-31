@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+
+<div class="row">
+    <div class="col-md-2 text-end ">
+        <i routerLink="/" style="cursor: pointer; font-size: 1.2rem;" class="pi pi-arrow-left mt-3"></i>
+        
+    </div>
+    <div class="col text-start">
+        <h2>Asilos registrados</h2>
+    </div>
+
+</div>
+<div class="container">
+
+    <div class="row" >
+        <div class="col-md-4" *ngFor="let asilos of posts" >
+            <div class="card text-center mt-2 mb-2 ms-2" style="box-shadow: 0 0 10px 0 gray; border-radius: 15px; width: 300px; height: auto;">
+                <div class="card-body">
+                  <img loading="lazy" [src]="asilos.foto != '' ? asilos.foto : '/assets/img/no-photo.png'" [alt]="asilos.name" class="img-card-top" width="150" height="150">
+                  <h2 class="card-subtitle">{{asilos.name}}</h2>
+                  <p class="card-text">Direccion: {{ asilos.address }}</p>
+                  <p class="text-muted"><a style="cursor: pointer;" [routerLink]="['/info-asilo', asilos.uid]" class="stretched-link">Ver más...</a></p>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

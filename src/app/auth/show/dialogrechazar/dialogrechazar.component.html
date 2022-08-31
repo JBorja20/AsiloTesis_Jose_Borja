@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col">
+        <h3>Motivo de rechazo</h3>
+    </div>
+</div>
+<form class="form-group" [formGroup]="formRechazo">
+    
+    <div class="row row-cols-2">
+        <div class="col mt-3" *ngFor="let f of motivoRechazo">
+            <mat-checkbox color="primary" formControlName="check" [value]="f.name" (change)="cambioValor($event)">{{ f.name }}</mat-checkbox>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" id="motivo" formControlName="mensaje">
+                <label for="motivo">Motivo</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="d-grid gap-1 d-md-flex justify-content-md-center">
+        <button type="button" class="btn btn-success" (click)="guardar()">Guardar</button>
+        <button type="button" class="btn btn-warning" (click)="cerrar()">Cancelar</button>
+        <!-- <div class="col"></div>
+        <div class="col-md-8">
+        </div>
+        <div class="col"></div> -->
+    </div>
+</form>

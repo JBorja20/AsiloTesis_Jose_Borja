@@ -1,0 +1,642 @@
+<app-navbar></app-navbar>
+
+<h2 align="center">Proforma para cálculo  de precios de un Asilo </h2>
+
+<div class="container-fluid ">
+
+
+     <div class="container d-flex justify-content-center">
+
+          <mat-stepper linear #stepper labelPosition="bottom" (selectionChange)="cambioStep(stepper)">
+               <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                         <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+                         <div class="row text-center">
+                           
+                              <div class="col">
+                                   <h5>Esta sección te permite seleccionar la ubicación del asilo </h5>
+                                   <mat-form-field appearance="fill">
+                                        
+                                        <mat-label><b>Ubicación</b> </mat-label>
+                                        <mat-select matNativeControl color="primary" formControlName="selectUbi" required (selectionChange)="cambiarUbicacion($event)">
+                                             <mat-option *ngFor="let ubi of ubicaciones; let i = index" [value]="i">
+                                                  {{ ubi.ubi }}
+                                             </mat-option>
+                                        </mat-select>
+                                   </mat-form-field>
+
+                                   <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55" ngbPopover="Este apartado te ayudará a elegir la ubicación del asilo" triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                        <path
+                                             d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                                   </svg>
+                              </div>
+                              <div class="col text-center" >
+                                   <div class="row col">
+                                        <h5>Esta sección te permite seleccionar el tipo de habitación</h5>
+                                        <mat-label class="text-center"><b> Tipo de Habitación
+                                             <svg placement="end" popoverClass="cambiar_fondo"  fill="#00ff55" ngbPopover="En este apartado encontrarás el tipo de habitación que deseas para el adulto mayor." triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                                  <path
+                                                       d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                                             </svg>
+                                        </b>  </mat-label>
+
+                                   </div>
+                                   <div class="row">
+                                        <div class="d-md-flex justify-content-md-center">
+                                             <mat-radio-group class="example-radio-group" aria-label="Select an option"
+                                                  formControlName="habitaciones" (change)="cambiarHabitacion()">
+                                                  <mat-radio-button color="primary"  *ngFor="let tipo of tipoHabitacion; let i = index;"
+                                                       class="example-radio-button" [id]="tipo.tipo" [name]="tipo.tipo"
+                                                       [value]="i">{{ tipo.tipo }}</mat-radio-button>
+                                             </mat-radio-group>
+
+                                        </div>
+
+                                   </div>
+
+                                        
+     
+                                   
+                                   
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col" style="text-align: center;">
+                                   <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+                              </div>
+                         </div>
+
+
+
+                    </form>
+                    <div class="row proforma__total mt-3">
+                         <table class="table table-striped">
+                              <thead class="table-dark">
+                                   <tr>
+                                        <th>Descripción</th>
+                                        <th>Valor</th>
+                                   </tr>
+                                   
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>
+                                             Zona/Ubicación - {{ ubicacionObj.ubi }}:
+                                        </td>
+                                        <td>
+                                             ${{ ubicacionObj.value }}
+                                        </td>
+                                   </tr>
+                                   <tr>
+                                        <td>Tipo de habitación - {{ tipoHabitacionObj.tipo }}</td>
+                                        <td>$ {{tipoHabitacionObj.value}}</td>
+                                   </tr>
+                              </tbody>
+                              <tfoot>
+                                   <tr>
+                                        <td class="text-end me-3 pe-2">
+                                             Total:
+                                        </td>
+                                        <td *ngIf="ubicacionObj?.value && !tipoHabitacionObj.value">
+                                             $ {{ ubicacionObj?.value }}
+                                        </td>
+                                        <td *ngIf="!ubicacionObj?.value && !tipoHabitacionObj.value">
+                                             $ {{ tipoHabitacionObj?.value }}
+                                        </td>
+                                        <td *ngIf="ubicacionObj?.value && tipoHabitacionObj.value">
+                                             $ {{ ubicacionObj?.value + tipoHabitacionObj.value }}
+                                        </td>
+                                        
+                                   </tr>
+                              </tfoot>
+                         </table>
+                         
+                    </div>
+               </mat-step>
+               <mat-step [stepControl]="SecondFormGroup">
+                    <form [formGroup]="SecondFormGroup">
+                         <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+                         <div class="row text-center">
+                             
+                              <div class="col">
+                                   <h5>Esta sección te permite seleccionar si deseas una habitación amoblada</h5>
+                                   <mat-form-field appearance="fill">
+                                        <mat-label> <b>Amoblado</b></mat-label>
+                                        <mat-select color="primary" formControlName="amobladoType" (selectionChange)="cambiarAmobalda()">
+                                             <option disabled selected value="#">Seleccione.. </option>
+                                             <mat-option *ngFor="let amob of amoblado; let i = index;" [value]="i">{{
+                                                  amob.amoblado }}</mat-option>
+                                             <!-- <option value="0">No </option> -->
+
+                                        </mat-select>
+                                   </mat-form-field>
+                                   <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55" ngbPopover="El asilo dispone de habitaciones con muebles para la comodidad de los adultos." triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                        <path
+                                             d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                                   </svg>
+                              </div>
+                              <div class="col">
+                                   <h5>Esta sección te permite seleccionar las condiciones en las que se encuentra el paciente</h5>
+                                   <mat-label><b>Cuidado Físico 
+                                        <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55" ngbPopover="El asilo presta asistencia física al adulto mayor si presenta problemas para trasladarse." triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                             <path
+                                                  d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                                        </svg></b>
+                                   </mat-label>
+                                   <div class="d-md-flex justify-content-md-center">
+
+                                        <mat-radio-group class="example-radio-group" aria-label="Select an option"
+                                             formControlName="cuidadoFisicoForm" (change)="cambiarCuidado()">
+                                             <mat-radio-button color="primary" *ngFor="let tipo of cuidadoFisico; let i = index;"
+                                                  class="example-radio-button" [id]="tipo.tipo" [name]="tipo.tipo"
+                                                  [value]="i">{{ tipo.tipo }}</mat-radio-button>
+                                        </mat-radio-group>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col" style="text-align: center;">
+                                   <button mat-raised-button class="text-bg-secondary me-2" matStepperPrevious>Regresar</button>
+                                   <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+                              </div>
+                         </div>
+                    </form>
+                    <div class="row proforma__total mt-3">
+                         <table class="table table-striped">
+                              <thead class="table-dark">
+                                   <tr>
+                                        <th>Descripción</th>
+                                        <th>Valor</th>
+                                   </tr>
+                                   
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>Amoblado - {{ amobladoObj.amoblado }}</td>
+                                        <td>$ {{amobladoObj.value}}</td>
+                                   </tr>
+                                   <tr>
+                                        <td>Cuidado Fisico - {{ cuidadoFisicoObj.amoblado }}</td>
+                                        <td>$ {{cuidadoFisicoObj.value}}</td>
+                                   </tr>
+                                   
+                              </tbody>
+                              <tfoot>
+                                   <tr>
+                                        <th class="text-end me-3 pe-2">
+                                             Total: 
+                                        </th>
+                                        <td *ngIf="amobladoObj?.value && !cuidadoFisicoObj?.value">
+                                             $ {{ ubicacionObj?.value + tipoHabitacionObj.value + amobladoObj.value }}
+                                        </td>
+                                        <td *ngIf="!amobladoObj?.value && cuidadoFisicoObj?.value">
+                                             $ {{ ubicacionObj?.value + tipoHabitacionObj.value + cuidadoFisicoObj.value }}
+                                        </td>
+                                        <td *ngIf="amobladoObj?.value && cuidadoFisicoObj?.value">
+                                             $ {{ ubicacionObj?.value + tipoHabitacionObj.value + amobladoObj.value + cuidadoFisicoObj.value }}
+                                        </td>
+                                   </tr>
+                              </tfoot>
+                         </table>
+                         
+                    </div>
+               </mat-step>
+
+               <mat-step [stepControl]="thirdFormGroup" style="height: 75vh;">
+                    <form [formGroup]="thirdFormGroup">
+                         <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+                         <div class="row">
+                             
+                              <div class="col">
+                                   <h5>Esta sección  permite seleccionar los servicios médicos</h5>
+                                   <div class="text-center">
+
+                                        <mat-label><b>Servicios Médicos
+                                             <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55" ngbPopover="Son servicios que presta el asilo para el cuidado permanente del adulto mayor." triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                                  <path
+                                                       d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                                             </svg></b>
+                                        </mat-label><br>
+                                   </div>
+                                   <ul style="margin-left: 25%">
+                                        <li *ngFor="let amob of serviciosMedicos[0].children; let i = index;">
+                                             <mat-checkbox color="primary" formControlName="servMed" (change)="serviciosmedicos($event)"
+                                                  [value]="amob.name">
+                                                  {{amob.name}}
+                                             </mat-checkbox>
+                                        </li>
+                                   </ul>
+                              </div>
+                              <div class="col">
+                                   <h5>Esta sección  permite seleccionar los tipos de  Cuidado Cognitivo</h5>
+                                   <mat-label><b>Cuidado Cognitivo
+                                        <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55" ngbPopover="Debe indicar si el adulto mayor padece de alguna dificultad mental." triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                             <path
+                                                  d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                                        </svg></b>
+                                   </mat-label>
+                                   <div class="d-md-flex justify-content-md-center">
+
+                                        <mat-radio-group class="example-radio-group" aria-label="Select an option"
+                                             formControlName="servCogni" (change)="cambiarCongnitivo()">
+                                             <mat-radio-button color="primary" *ngFor="let tipo of cuidadoCog; let i = index;"
+                                                  class="example-radio-button" [id]="tipo.cuidado" [name]="tipo.cuidado"
+                                                  [value]="i">{{ tipo.cuidado }}</mat-radio-button>
+                                        </mat-radio-group>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col" style="text-align: center;">
+                                   <button mat-raised-button class="text-bg-secondary me-2 me-2" matStepperPrevious>Regresar</button>
+                                   <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+                              </div>
+                         </div>
+                    </form>
+                    <div class="row proforma__total mt-3">
+                         <table class="table table-striped">
+                              <thead class="table-dark">
+                                   <tr>
+                                        <th>Descripcion</th>
+                                        <th>Valor</th>
+                                   </tr>
+                                   
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>
+                                             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                                  <mat-tree-node style="margin-left: 30px; border:soli 1px black" *matTreeNodeDef="let node" matTreeNodeToggle>
+                                                       
+                                                       <span>{{node.name}}: </span>
+                                                       <b style="margin-left: 0.5%"> $ {{node.value}} </b>
+                                                       
+                                                   </mat-tree-node>
+                                                   <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                                                       <div style="margin-left: -30px; width: 100%">
+                                                         <button mat-icon-button matTreeNodeToggle
+                                                                 [attr.aria-label]="'Toggle ' + node.name">
+                                                           <mat-icon class="mat-icon-rtl-mirror">
+                                                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                           </mat-icon>
+                                                         </button>
+                                                         <span style="font-size: 18px">{{node.name}}</span>
+                                                         
+                                                       </div>
+                                                       <!-- There is inline padding applied to this div using styles.
+                                                           This padding value depends on the mat-icon-button width.  -->
+                                                       <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+                                                           role="group">
+                                                         <ng-container matTreeNodeOutlet></ng-container>
+                                                     </div>
+                                                   </mat-nested-tree-node>
+                                                  
+                                             </mat-tree>
+                                        </td>
+                                        <td>$ {{ (sumaTotalServMedicos < 0) ? (-1)*sumaTotalServMedicos : sumaTotalServMedicos}}</td>
+                                   </tr>
+                                   <tr>
+                                        <td>Cuidado Cognitivo - {{ cuidadoCogObj.cuidado }}</td>
+                                        <td>$ {{cuidadoCogObj.value}}</td>
+                                   </tr>
+                              </tbody>
+                              <tfoot>
+                                   <tr>
+                                        <th class="text-end me-3 pe-2">
+                                             Total: 
+                                        </th>
+                                        <td *ngIf="sumaTotalServMedicos !== 0 && !cuidadoCogObj.value">
+                                             $ {{ ubicacionObj?.value + tipoHabitacionObj.value + amobladoObj.value + cuidadoFisicoObj.value + sumaTotalServMedicos }}
+                                        </td>
+                                        <td *ngIf="sumaTotalServMedicos === 0 && cuidadoCogObj.value">
+                                             $ {{ ubicacionObj?.value + tipoHabitacionObj.value + amobladoObj.value + cuidadoFisicoObj.value + cuidadoCogObj.value }}
+                                        </td>
+                                        <td *ngIf="sumaTotalServMedicos !== 0 && cuidadoCogObj.value">
+                                             $ {{ ubicacionObj?.value + tipoHabitacionObj.value + amobladoObj.value + cuidadoFisicoObj.value + sumaTotalServMedicos + cuidadoCogObj.value}}
+                                        </td>
+                                   </tr>
+                              </tfoot>
+                         </table>
+                         
+                    </div>
+               </mat-step>
+               <mat-step [stepControl]="FourthFormGroup" style="height: 75vh;">
+                    
+                    <form [formGroup]="FourthFormGroup">
+                         <!-- <ng-template matStepLabel>Fill out your name</ng-template> -->
+                         <div class="row ">
+                 
+                              <div class="col">
+                                   <h5>Esta sección  permite seleccionar los servicios adicionales</h5>
+                                   <div class="text-center">
+                                        <mat-label><b>Servicios Adicionales
+                                             <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55" ngbPopover="Son servicios que presta el asilo al adulto mayor para su bienestar. Seleccione cuál desea ocupar." triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                                  <path
+                                                       d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                                             </svg></b>
+                                        </mat-label><br>
+                                   </div>
+
+                                   <ul style="margin-left: 25%;">
+                                        <li *ngFor="let amob of serviciosAdicionales[0].children; let i =index">
+                                             <mat-checkbox color="primary" formControlName="servAdicionales"
+                                                  (change)="serviciosadicionales($event)" [value]="amob.name">
+                                                  {{amob.name}}
+                                             </mat-checkbox>
+                                        </li>
+                                   </ul>
+                              </div>
+                              <div class="col text-center">
+                                   <h5>Esta sección  permite seleccionar cuantos hijos tiene el paciente</h5>
+                                   <mat-label><b>¿Cuántos hijos tiene la persona mayor?</b></mat-label>
+                                   <mat-form-field appearance="fill">
+
+                                        <mat-label>¿Cuántos Hijos?</mat-label>
+                                        <mat-select formControlName="hijos" (selectionChange)="sumaTotalHijos()">
+                                             <mat-option selected disabled value=" 0 ">Seleccione.. </mat-option>
+                                             <mat-option value="1">1 </mat-option>
+                                             <mat-option value="2">2 </mat-option>
+                                             <mat-option value="3">3 </mat-option>
+                                             <mat-option value="4">4 </mat-option>
+                                             <mat-option value="5">5 </mat-option>
+                                             <mat-option value="6">6 </mat-option>
+                                             <mat-option value="7">7 </mat-option>
+                                             <mat-option value="8">8 </mat-option>
+                                             <mat-option value="9">9 </mat-option>
+                                             <mat-option value="10">10 </mat-option>
+                                        </mat-select>
+                                   </mat-form-field>
+                              </div>
+                         </div>
+                         <div class="row">
+                              <div class="col" style="text-align: center;">
+                                   <button mat-raised-button class="text-bg-secondary me-2 me-2"  matStepperPrevious>Regresar</button>
+                                   <button mat-raised-button color="primary" matStepperNext (click)="calcular()">Calcular</button>
+                              </div>
+                         </div>
+                    </form>
+                    <div class="row proforma__total mt-3">
+                         <table class="table table-striped">
+                              <thead class="table-dark">
+                                   <tr>
+                                        <th>Descripción</th>
+                                        <th>Valor</th>
+                                   </tr>
+                                   
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td>
+
+                                             <mat-tree [dataSource]="dataSourceAdi" [treeControl]="treeControlAdi">
+                                                  <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                                                       <!-- {{node.name}} -->
+                                                       <span>{{node.name}}: </span>
+                                                       <b style="margin-left: 0.5%"> $ {{node.value}} </b>
+                                                       
+                                                       
+                                                   </mat-tree-node>
+                                                   <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildAdi">
+                                                       <div style="margin-left: -30px; width: 100%">
+                                                         <button mat-icon-button matTreeNodeToggle
+                                                                 [attr.aria-label]="'Toggle ' + node.name">
+                                                           <mat-icon class="mat-icon-rtl-mirror">
+                                                             {{treeControlAdi.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                           </mat-icon>
+                                                         </button>
+                                                         <span style="font-size: 18px">{{node.name}}</span>
+                                                         
+                                                       </div>
+                                                       <!-- There is inline padding applied to this div using styles.
+                                                           This padding value depends on the mat-icon-button width.  -->
+                                                       <div [class.example-tree-invisible]="!treeControlAdi.isExpanded(node)"
+                                                           role="group">
+                                                         <ng-container matTreeNodeOutlet></ng-container>
+                                                     </div>
+                                                   </mat-nested-tree-node>
+                                                  
+                                             </mat-tree>
+                                        </td>
+                                        <!-- <td>Servicios adicionales - ({{ servicioAdiAux.length }})</td> -->
+                                        <td>$ {{ (sumaTotalServAdicionales < 0) ? (-1)*sumaTotalServAdicionales : sumaTotalServAdicionales }}</td>
+                                   </tr>
+                                   <!-- <tr>
+                                        <td>Valor total por hijo</td>
+                                        <td class="text-end">$ {{sumaseccionHijos}}</td>
+                                        <td></td>
+                                   </tr> -->
+                              </tbody>
+                              <tfoot>
+                                   <tr>
+                                        <th class="text-end me-3 pe-2">
+                                             Total: 
+                                        </th>
+                                        <td *ngIf="sumaTotalSteps?.sumaAdicional && !sumaTotalSteps?.hijos">
+                                             $ {{ sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps.sumaCognitivo + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaServiciosMedicos + sumaTotalSteps.sumaAdicional }}
+                                        </td>
+                                        <td *ngIf="!sumaTotalSteps?.sumaAdicional && sumaTotalSteps?.hijos">
+                                             $ {{ sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps.sumaCognitivo + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaServiciosMedicos + sumaTotalSteps.sumaAdicional }}
+                                        </td>
+                                        <td *ngIf="sumaTotalSteps?.sumaAdicional && sumaTotalSteps?.hijos">
+                                             $ {{ sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps.sumaCognitivo + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaServiciosMedicos + sumaTotalSteps.sumaAdicional }}
+                                        </td>
+                                        
+                                   </tr>
+                                   <tr>
+                                        <th class="text-end me-3 pe-2">
+                                             Total por hijos
+                                        </th>
+                                        <td *ngIf="!sumaTotalSteps?.sumaAdicional && sumaTotalSteps?.hijos">
+                                             $ {{ (sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaCognitivo) / sumaTotalSteps.hijos }}
+                                        </td>
+                                        <td *ngIf="sumaTotalSteps?.sumaAdicional && sumaTotalSteps?.hijos">
+                                             $ {{ (sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaServiciosMedicos + sumaTotalSteps.sumaCognitivo + sumaTotalSteps.sumaAdicional) / sumaTotalSteps.hijos }}
+                                        </td>
+                                   </tr>
+                              </tfoot>
+                         </table>
+                         
+                    </div>
+               </mat-step>
+               <mat-step class="text-center">
+                    <div class="d-flex justify-content-center mt-4" style="border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 8px #ccc;">
+
+                         <div style="width: 70%;">
+     
+                              <div class="row mt-4" >
+                                   <div class="col d-flex mt-auto text-start">
+                                        <br>
+                                        <h2 align=""><span>Proforma</span><br><br><span align="">Casa Esperanza</span></h2>
+                                   </div>
+
+                                   <div class="col text-end">
+                                        <img src="assets/img/logo.png" width="100" alt="1" style="border-radius: 100%;" />
+                                   </div>
+                              </div>
+                              <div class="row text-center" >
+                                   <div class="col text-center mt-3" style="width: 80%">
+                                        <div class="text-center">
+                                             <h4>Datos</h4>
+                                        </div>
+                                        <div class="row">
+                                             <div class="col text-start">
+                                                  <span style="display: block; padding-bottom: 3px;"><b>Nombre : Casa Esperanza </b></span>
+                                                  <span style="display: block; padding-bottom: 3px;"><b>Provincia: </b> Pichincha</span>
+                                                  <span style="display: block; padding-bottom: 3px;"><b>Cédula: </b> 1724596840</span>
+                                             </div>
+                                             <div class="col text-start">
+                                                  <span class="text-body" style="padding-bottom: 3px;"><b>Fecha: </b>{{ fecha }}</span>
+                                                  <span style="display: block; padding-bottom: 3px;"><b>Ciudad: </b> Quito</span>
+                                                  <span style="display: block; padding-bottom: 3px;"><b>Correo: </b> CasaEsperanza@gmail.com</span>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                              <div class="row mt-3">
+                                   <table class="table table-striped">
+                                        <thead class="table-dark">
+                                             <tr class="text-center">
+                                                  <th colspan="2">Detalles de la proforma</th>
+                                             </tr>
+                                             <tr>
+                                                  <th>Descripción</th>
+                                                  <th>Valor</th>
+                                             </tr>
+                                             
+                                        </thead>
+                                        <tbody>
+                                             <tr>
+                                                  <td>Tipo de habitación - {{ tipoHabitacionObj.tipo }}</td>
+                                                  <td>$ {{tipoHabitacionObj.value}}</td>
+                                             </tr>
+                                             <tr>
+                                                  <td>Zona/Ubicación - {{ ubicacionObj.ubi }}</td>
+                                                  <td>$ {{ubicacionObj.value}}</td>
+                                             </tr>
+                                             <tr>
+                                                  <td>Amoblado - {{ amobladoObj.amoblado }}</td>
+                                                  <td>$ {{amobladoObj.value}}</td>
+                                             </tr>
+                                             <tr>
+                                                  <td>Cuidado físico - {{ cuidadoFisicoObj.tipo }}</td>
+                                                  <td>$ {{cuidadoFisicoObj.value}}</td>
+                                             </tr>
+                                             <tr>
+                                                  <td>Cuidado Cognitivo - {{ cuidadoCogObj.cuidado }}</td>
+                                                  <td>$ {{cuidadoCogObj.value}}</td>
+                                             </tr>
+                                             <tr>
+                                                  <td>
+                                                       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                                            <mat-tree-node style="margin-left: 30px; border:soli 1px black" *matTreeNodeDef="let node" matTreeNodeToggle>
+                                                                 
+                                                                 <span>{{node.name}}: </span>
+                                                                 <b style="margin-left: 0.5%"> $ {{node.value}} </b>
+                                                                 
+                                                             </mat-tree-node>
+                                                             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                                                                 <div style="margin-left: -30px; width: 100%">
+                                                                   <button mat-icon-button matTreeNodeToggle
+                                                                           [attr.aria-label]="'Toggle ' + node.name">
+                                                                     <mat-icon class="mat-icon-rtl-mirror">
+                                                                       {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                                     </mat-icon>
+                                                                   </button>
+                                                                   <span style="font-size: 18px">{{node.name}}</span>
+                                                                   
+                                                                 </div>
+                                                                 <!-- There is inline padding applied to this div using styles.
+                                                                     This padding value depends on the mat-icon-button width.  -->
+                                                                 <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+                                                                     role="group">
+                                                                   <ng-container matTreeNodeOutlet></ng-container>
+                                                               </div>
+                                                             </mat-nested-tree-node>
+                                                            
+                                                       </mat-tree>
+                                                  </td>
+                                                  <td>$ {{ (sumaTotalServMedicos < 0) ? (-1)*sumaTotalServMedicos : sumaTotalServMedicos}}</td>
+                                             </tr>
+                                             <tr>
+                                                  <mat-tree [dataSource]="dataSourceAdi" [treeControl]="treeControlAdi">
+                                                       <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                                                            <!-- {{node.name}} -->
+                                                            <span>{{node.name}}: </span>
+                                                            <b style="margin-left: 0.5%"> $ {{node.value}} </b>
+                                                            
+                                                            
+                                                        </mat-tree-node>
+                                                        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildAdi">
+                                                            <div style="margin-left: -30px; width: 100%">
+                                                              <button mat-icon-button matTreeNodeToggle
+                                                                      [attr.aria-label]="'Toggle ' + node.name">
+                                                                <mat-icon class="mat-icon-rtl-mirror">
+                                                                  {{treeControlAdi.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                                </mat-icon>
+                                                              </button>
+                                                              <span style="font-size: 18px">{{node.name}}</span>
+                                                              
+                                                            </div>
+                                                            <!-- There is inline padding applied to this div using styles.
+                                                                This padding value depends on the mat-icon-button width.  -->
+                                                            <div [class.example-tree-invisible]="!treeControlAdi.isExpanded(node)"
+                                                                role="group">
+                                                              <ng-container matTreeNodeOutlet></ng-container>
+                                                          </div>
+                                                        </mat-nested-tree-node>
+                                                       
+                                                  </mat-tree>
+                                                  <!-- <td>Servicios adicionales - ({{ servicioAdiAux.length }})</td> -->
+                                                  <td>$ {{ (sumaTotalServAdicionales < 0) ? (-1)*sumaTotalServAdicionales : sumaTotalServAdicionales }}</td>
+                                             </tr>
+                                             
+                                             
+                                        </tbody>
+                                        <br>
+                                   </table>
+                                   <table class="table table-striped mt-4">
+                                        <thead>
+                                             <tr>
+                                                  <th></th>
+                                                  <th></th>
+                                             </tr>
+                                        </thead>
+                                        <tfoot style="margin-top: 15px !important">
+                                             <tr>
+                                                  <td>Total</td>
+                                                  <td class="text-end">$ {{suma}}</td>
+                                                  <td></td>
+                                             </tr>
+                                             <tr>
+                                                  <td>Valor total por hijo</td>
+                                                  <td class="text-end">$ {{(suma/numhijos) | number:'1.1-2'}}</td>
+                                                  <td></td>
+                                             </tr>
+                                        </tfoot>
+
+                                   </table>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="row">
+
+                         <div class="d-flex justify-content-end" >
+
+                              
+                         </div>
+                    </div>
+                    <div class="row mt-3 ">
+                         <div class="col d-flex justify-content-center">
+                              <button mat-raised-button class="text-bg-secondary me-2" matStepperPrevious>Regresar</button>
+                              <button mat-raised-button class="text-bg-warning me-2" (click)="reset(stepper)">Reset</button>
+                              <button class="btn btn-outline-primary" type="button" (click)="descargar()">Descargar proforma</button>
+                         </div>
+                    </div>
+                    
+               </mat-step>
+          </mat-stepper>
+
+
+          
+     </div>
+     <br>

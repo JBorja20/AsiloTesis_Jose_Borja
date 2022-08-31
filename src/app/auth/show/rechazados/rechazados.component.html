@@ -1,0 +1,63 @@
+
+  <!-- <input mat-input type="text" class="form-control" placeholder="Buscar valor" name="buscar" (keyup)="bucarValor($event.target)" > -->
+  <div class="row" style="width: 99.3%">
+    <div class="d-flex justify-content-center align-items-center">
+
+      <div class="col-md-10">
+        <div class="row">
+          <mat-form-field appearance="standard">
+            <mat-label>Buscar</mat-label>
+            <input matInput (keyup)="bucarValor($event.target)" placeholder="Ex. nombre" #input>
+          </mat-form-field>
+        </div>
+          <div class="mat-elevation-z8">
+    
+          <table mat-table [dataSource]="dataSource">
+            
+              <!-- Position Column -->
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef class="text-start">Nombre</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="cedula">
+                <th mat-header-cell *matHeaderCellDef class="text-start"> Cédula </th>
+                <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
+              </ng-container>
+          
+              <!-- Name Column -->
+              <ng-container matColumnDef="direcicon">
+                <th mat-header-cell *matHeaderCellDef class="text-start"> Dirección </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+              </ng-container>
+          
+              <!-- Weight Column -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="text-start"> Correo </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>
+          
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="telefono">
+                <th mat-header-cell *matHeaderCellDef class="text-start"> Teléfono </th>
+                <td mat-cell *matCellDef="let element"> {{element.fono}} </td>
+              </ng-container>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="motivo">
+                <th mat-header-cell *matHeaderCellDef > Motivo </th>
+                <td mat-cell *matCellDef="let element"> {{element.mensaje}} </td>
+              </ng-container>
+          
+              
+          
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator id="rechazados" [pageSizeOptions]="[4, 8, 12]" showFirstLastButtons
+              aria-label="Select page of periodic elements">
+            </mat-paginator>
+        </div>
+      </div>
+    </div>
+
+  </div>

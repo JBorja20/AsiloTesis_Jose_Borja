@@ -1,0 +1,273 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div class="row ">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="col-md-5">
+          <span class="home__warning">Bienvenido a nuestro sitio</span>
+          <span class="home__title">Casa Esperanza</span>
+          <p class="home__subtitle">Casa Esperanza permite visualizar todo tipo de asilo registrado y asi como una información detallado de los servicios que presta cada uno de los asilos</p>
+          <div class="row">
+            <button class="btn btn-primary home__button">Quienes Somos</button>
+          </div>
+      </div>
+      
+      <div class="col-md-7">
+        <div style="width: '100%'">
+          <p-carousel class=" text-center" [value]="fotos" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
+          [showIndicators]="true" >
+            <ng-template let-fotos pTemplate="item" class="text-center">
+              <img class="text-center" loading="lazy" [src]="fotos.path != '' ? fotos.path : 'assets/img/no-photo.png'" [alt]="fotos.alt" width="450" height="350">
+            </ng-template>
+          </p-carousel>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="container mt-5 position-relative d-flex justify-content-center align-items-center ">
+
+      <div class="home__back d-flex justify-content-center align-items-center " id="somos">
+        <div class="row">
+          <div class="col text-center" >
+            <h5><b>¿Quienes Somos?</b></h5>
+            <div class="row">
+              <div class="col">
+              <p class="lead">
+                - Casa Esperanza te brinda un servicio de información de los diferentes asilos que hay en Quito,
+                como también dar a conocer sobre los servicios, y detallar los beneficios de un asilo. <br />
+                - Casa Esperanza también te da la opción realizar una proforma para estima el costo aproximado de
+                una asilo
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+    <!-- div para la seccion de afiliarse -->
+    <div class="d-flex justify-content-center align-items-center home__border_asilos__registrados margin__top__10">
+      <span class="text-primary text-center fontSize home__title_afiliarse"><b>Afiliarse</b></span>
+    </div>
+    <div class="row home__card mb-5">
+      <div class="row p-5">
+        <div class="col-md-4 p-text-center">
+          <img src='assets/img/valor.png' loading="lazy" class='bd-placeholder-img' width="300" height="220" alt="valor"/>
+        </div>
+        <div class="col">
+          <div class="row">
+            <span class="home__warning">Quieres dar a conocer tu asilo!</span>
+          
+          </div>
+          <div class="row">
+            <div class="col mt-3">
+              <span >Te encuentras en el lugar indicado ya que este es un sitio web que permite afiliarse y permite registrar toda la información sobre el asilo que administra. De esta manera se podria llegar de manera organica a más personas y dar a conocer su asilo.</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mt-3">
+              <span>Pues que esperas da click en el botón que se muestra a continuacion.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center mb-5">
+        <Button class="btn btn-outline-primary"  routerLink="/register">Afiliarse</Button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center home__border_asilos__registrados margin__top__10">
+      <span class="text-primary text-center fontSize home__title_afiliarse"><b>Asilos Ubicaciones</b></span>
+      
+      
+    </div>
+    <div class="row">
+      <span class="text-bg-secondary rounded-2 mb-2">
+        En el mapa se muestran todos los asilo registrados puede dar clic en una ubicación y se mostrará una ventana auxiliar.
+      </span>
+    </div>
+    <div id="mapa"></div>
+    <div class="d-flex justify-content-center align-items-center home__border_asilos__registrados margin__top__10">
+      <span class="text-primary text-center fontSize home__title_afiliarse"><b>Asilos registrados</b></span>
+      
+      
+    </div>
+    <div class="row" *ngIf="posts.length == 0">
+      <div class="col text-center">
+        No existen por el momento asilos registrados, Muchas gracias por la comprension, puede seguir revisando nuestro sitio web y volver en otro instante a revisar.
+      </div>
+    </div>
+      <div class="row mb-5" *ngIf="posts.length > 0">
+        <p-carousel [value]="posts" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
+        [showIndicators]="true">
+          <ng-template let-asilos pTemplate="item">
+            <div class="card text-center mt-2 mb-2 ms-2"
+              style="box-shadow: 0 0 10px 0 gray; border-radius: 15px; width: 300px; height: auto;">
+              <div class="card-body">
+                <img [src]="asilos.foto != '' ? asilos.foto : '/assets/img/no-photo.png'" loading="lazy" [alt]="asilos.name"
+                  class="img-card-top" width="150" height="150">
+                <h2 class="card-subtitle">{{asilos.name}}</h2>
+                <p class="card-text">Direccion: {{ asilos.address }}</p>
+                <p class="text-muted"><a style="cursor: pointer;" class="stretched-link"
+                    (click)="abrirDialog(asilos.uid)">Ver más...</a></p>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+        <div class="d-flex justify-content-end">
+          <div class="text-end me-2">
+            <a style="cursor: pointer;" routerLink="/allasilos">Ver todos los asilos <i class="pi pi-angle-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    <div class="d-flex justify-content-center align-items-center home__border_asilos__registrados margin__top__10">
+      <span class="text-primary text-center fontSize home__title_afiliarse"><b>Proforma</b></span>
+    </div>
+    <div class="home__card p-5">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col mt-3">
+              <span class="home__warning">Calcula tu propio costo aproximado de un asilo</span>
+              <span class="fontSize__subtitle mt-2"></span>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <span class="mt-2">Nuestras proformas tienen la opcion de calcular costos en base a servicios generales y principales brindados por los asilos.</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <span>Pues que esperas da click en el botón que se muestra a continuacion, para conocer el costo accesible.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 text-center">
+          <img loading="lazy" src='assets/img/valor.png' class='bd-placeholder-img ' width="300" height="220" alt="valor"/>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <Button class="btn btn-outline-primary"  routerLink="/p/cover">Ir a Proforma</Button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center home__border_asilos__caracteristicas margin__top__10">
+      <span class="text-primary text-start fontSize home__title_afiliarse"><b>Características de casa esperanza</b></span>
+    </div>
+    <div class="mb-5 home__subir__caracteristicas">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="home__card__caracteristicas text-center h__100 d-flex justify-content-center align-items-center p-3">
+            <p>- Impartir informacion de diferentes asilos a la comunidad</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="home__card__caracteristicas text-center h__100 d-flex justify-content-center align-items-center p-3">
+            <p>- Dar a conocer sobre los servicios y beneficios de un asilo</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="home__card__caracteristicas text-center h__100 d-flex justify-content-center align-items-center p-3">
+            <p>- Dar a conocer sobre los servicios y beneficios de un asilo</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="home__card__caracteristicas text-center h__100 d-flex justify-content-center align-items-center p-3">
+            <p>- Brindar informacion personal y detallada de cada uno de los asilos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="home__footer text-center">
+  <div class="row pt-5 mt-3 mb-4 pb-3">
+
+    <div class="d-flex justify-content-center align-items-center " style="height: 50px">
+      <h4 class="fontSize text-white "><b>Contactos</b></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h4 class=" text-white"><b>Correo</b></h4>
+      <div class="row">
+        <div class="col">
+          <a href="mailto:jose.borja@epn.edu.ec" class="block">jose.borja@epn.edu.ec</a>
+          <a href="mailto:jose.borja_@hotmail.com" class="block">jose.borja_@hotmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <h4 class=" text-white"><b>Redes Sociales</b></h4>
+          <div class="row">
+            <div class="col">
+              <span>  
+                <i class="pi pi-facebook me-1 text-primary"></i>
+                Facebook
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <span>
+                <i class="pi pi-instagram me-1 text-danger"></i>   
+                Instagram
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <span>
+                <i class="pi pi-twitter me-1 text-info"></i>    
+                Twitter
+              </span>
+            </div>
+          </div>
+    </div>
+    <div class="col mb-4">
+      <div class="row">
+        <div class="col text-center">
+
+          <h4 class="text-white"><b>Sugerencias</b></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="d-flex justify-content-center">
+
+          <form [formGroup]="sugerenciasForm" (ngSubmit)="enviarSugerenciaCorreo()" style="width: 75%">
+            <div class="form-group text-start">
+              <label class="">Nombre</label>
+              <input class="form-control" placeholder="nombre"  type="text" formControlName="from_name" />
+              <div class="row" *ngIf="nombreError">
+                <span class="text-danger">El nombre es un campo obligatorio</span>
+              </div>
+            </div>
+            <div class="form-group text-start">
+              <label>Correo</label>
+              <input class="form-control" placeholder="correo" formControlName="reply_to"  type="email" />
+              <div class="row" *ngIf="correoError">
+                <span class="text-danger">El correo es un campo obligatorio</span>
+              </div>
+              <div class="row" *ngIf="correoErrorPattern">
+                <span class="text-danger">Ingrese un correo valido.</span>
+              </div>
+            </div>
+            <div class="form-group text-start">
+              <label>Mensaje</label>
+              <textarea minRows="6" class="form-control" placeholder="Escriba una sugerencia" formControlName="message"  type="email" ></textarea>
+              <div class="row" *ngIf="mensajeError">
+                <span class="text-danger">El mensaje es un campo obligatorio</span>
+              </div>
+  
+            </div>
+            <div class="d-flex justify-content-center mt-2 mb-2">
+              <button class="btn btn-primary" [disabled]="enviarSugerencia" type="submit"><i [ngClass]="!enviarSugerencia ? 'pi pi-save': 'pi pi-spin pi-spinner'"></i> Enviar sugerencia</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

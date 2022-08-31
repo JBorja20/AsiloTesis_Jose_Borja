@@ -1,0 +1,659 @@
+
+
+
+<div style="width: 100%" id="inicio">
+    <!-- <div class="row"> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="cursor:pointer" routerLink="/">Principal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="d-flex justify-content-end">
+                <div class="collapse navbar-collapse text-end" id="navbarScroll">
+
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <button type="button" class=" btn btn-outline-light"
+                                (click)="navegarSeccion('inicio')">Inicio</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class=" btn btn-outline-light"
+                                (click)="navegarSeccion('somos')">Quienes somos</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class=" btn btn-outline-light"
+                                (click)="navegarSeccion('servicios')">Servicios</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class=" btn btn-outline-light"
+                                (click)="navegarSeccion('horarios')">Horarios</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class=" btn btn-outline-light"
+                                (click)="navegarSeccion('contacto')">Contactos</button>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- </div> -->
+</div>
+<br>
+<div class="">
+
+    <div class="row">
+        <div class="col text-center">
+            <img [src]="posts.foto != '' ? posts.foto : 'assets/img/no-photo.png'" [alt]="posts.name" width="837.67" height="600">
+        </div>
+        <div class="col"  id="somos">
+            <div class="pb-4"></div>
+            <div class="d-flex justify-content-start" >
+                <div style="width: 80%">
+                
+                    <div class="row mt-5 pt-5">
+                        <div style="display:flex; justify-content: center;" class="mt-3 pt-3">
+                            <h2>¿Quienes somos?</h2>
+                        </div>
+                    </div>
+                    <div class="row" style="display:flex; justify-content: center; align-items: center;">
+                        <!-- <div class="col-md-1"></div> -->
+                        <div class="col-md-12 col col-lg-12 col-sm-12 mt-2">
+                            <h6 style="border-bottom: solid 1px #ccc" class="text-center">Nuestra Mision</h6>
+                            <p style="color: black;">
+                                {{ posts.mision }}
+                            </p>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col co-lg-12 col-sm-12 mt-2">
+                            <h6 style="border-bottom: solid 1px #ccc" class="text-center">Nuestra Vision</h6>
+                            <p style="color: black;">
+                                {{ posts.vision }}
+                            </p>
+        
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background-color: rgb(243, 239, 239);">
+    <div class="container">
+
+        <!-------------------------mision vision 1-------------------->
+        <!-- <ng-template id="somos"> -->
+
+        <!-- <div class="col-md-12 container pt-4" id="somos">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-5 d-flex flex-column position-static" style="background-color:white ;">
+
+                    <div class="row mt-4" style="background-color:white ;">
+                        <div style="display:flex; justify-content: center;">
+                            <h2>¿Quienes somos?</h2>
+                        </div>
+                        <div class="row " style="display:flex; justify-content: center;">
+                            
+                            <div class="col-md-6">
+                                <h6 style="border-bottom: solid 1px #ccc">Nuestra Mision</h6>
+                                <p style="color: black;">
+                                    {{ posts.mision }}
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 style="border-bottom: solid 1px #ccc">Nuestra Vision</h6>
+                                <p style="color: black;">
+                                    {{ posts.vision }}
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- </ng-template> -->
+
+
+        <!-------------------------Controles Medicos 1-------------------->
+        <!-- <ng-template id="servicios"> -->
+        <div id="servicios">
+
+            <span class="d-flex justify-content-center align-items-center info__barras">
+                <h1 align="center" class="p-3">SERVICIOS INCLUÍDOS</h1>
+            </span>
+            <br>
+            <div class="col-md-12 container" id="servicios">
+                <div
+                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-auto d-none d-lg-block col p-4" style="background-color:white ;">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="assets/img/servicios.jpg" width="400" height="218">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column position-static" style="background-color:white ;">
+                        <strong class="d-inline-block mb-4 text-primary text-start mt-4"
+                            style="border-bottom: 1px solid #dbdbdb">Servicios Médicos</strong>
+                        <!-- <h3 class="mb-0"> </h3> -->
+                        <br>
+                        <div class="col text-start" style="margin-top: -25px; margin-left: -20px" *ngIf="posts">
+                            <div *ngIf="serviciosMedicosFunc">
+
+                                <span *ngFor="let serv of (posts.controlesMedicos | mostrar)" style="display: block;">
+                                    <span *ngIf="serv.value">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px" height="20px"
+                                            width="20px" viewBox="0 0 50 50">
+                                            <path
+                                                d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                        </svg>
+                                        {{ serv.name }}
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center" *ngIf="!serviciosMedicosFunc">
+                                <span class="text-info">
+                                    El asilo no dispone de servicios médicos por el momento, en un futuro podrá
+                                    implementarlos. Muchas gracias por la comprensión.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!----------------------Servicios sanitarios 1-------------------------->
+
+            <br>
+            <div class="col-md-12 container">
+                <div
+                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+
+                    <div class="col d-flex flex-column position-static text-start ps-4"
+                        style="background-color:white ;">
+                        <strong class="d-inline-block mb-4 text-primary text-start mt-4"
+                            style="border-bottom: 1px solid #dbdbdb">Servicios Sanitarios</strong>
+                        <h3 class="mb-0"> </h3>
+                        <br>
+                        <div class="col text-start" style="margin-top: -25px; margin-left: -20px">
+                            <div *ngIf="serviciosSanitariosFunc">
+
+                                <span style="display: block;" *ngFor="let serv of (posts.servicioSanitarios | mostrar)">
+                                    <span *ngIf="serv.value">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px" height="20px"
+                                            width="20px" viewBox="0 0 50 50">
+                                            <path
+                                                d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                        </svg>
+                                        {{ serv.name }}
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center"
+                                *ngIf="!serviciosSanitariosFunc">
+                                <span class="text-info">
+                                    El asilo no dispone de servicios sanitarios por el momento, en un futuro podrá
+                                    implementarlos. Muchas gracias por la comprensión.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto d-none d-lg-block col p-4" style="background-color:white ;">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="assets/img/sani.jpg" width="400" height="218">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!----------------------Servicios atencion 1-------------------------->
+
+            <br>
+            <div class="col-md-12 container">
+                <div
+                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-auto d-none d-lg-block col p-4" style="background-color:white ;">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="assets/img/control.jpg" width="400" height="218">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column position-static text-start" style="background-color:white ;">
+                        <strong class="d-inline-block mb-4 text-primary text-start mt-4"
+                            style="border-bottom: 1px solid #dbdbdb">Servicios de atención de la persona mayor</strong>
+                        <h3 class="mb-0"> </h3>
+                        <br>
+                        <div class="col text-start" style="margin-top: -25px; margin-left: -20px" *ngIf="posts">
+                            <div *ngIf="serviciosAtencionFunc">
+
+                                <span style="display: block;" *ngFor="let serv of (posts.serviciosAtencion | mostrar)">
+                                    <span *ngIf="serv.value">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px" height="20px"
+                                            width="20px" viewBox="0 0 50 50">
+                                            <path
+                                                d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                        </svg>
+                                        {{ serv.name }}
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center"
+                                *ngIf="!serviciosAtencionFunc">
+                                <span class="text-info">
+                                    El asilo no dispone de servicios médicos por el momento, en un futuro podrá
+                                    implementarlos. Muchas gracias por la comprensión.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!----------------------Servicios terapeuticos 1-------------------------->
+
+            <br>
+            <div class="col-md-12 container">
+                <div
+                    class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+
+                    <div class="col d-flex flex-column position-static text-start ps-4"
+                        style="background-color:white ;">
+                        <strong class="d-inline-block mb-4 text-primary text-start mt-4"
+                            style="border-bottom: 1px solid #dbdbdb">Servicios Terapéuticos</strong>
+                        <h3 class="mb-0"> </h3>
+                        <br>
+                        <div class="col text-start" style="margin-top: -25px; margin-left: -20px" *ngIf="posts">
+                            <div *ngIf="serviciosTerapeuticosFunc">
+
+                                <span style="display: block;"
+                                    *ngFor="let serv of (posts.servisioTerapeuticos | mostrar)">
+                                    <span *ngIf="serv.value">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px" height="20px"
+                                            width="20px" viewBox="0 0 50 50">
+                                            <path
+                                                d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                        </svg>
+                                        {{ serv.name }}
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center"
+                                *ngIf="!serviciosTerapeuticosFunc">
+                                <span class="text-info">
+                                    El asilo no dispone de servicios terapéuticos por el momento, en un futuro podrá
+                                    implementarlos. Muchas gracias por la comprensión.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto d-none d-lg-block col p-4" style="background-color:white ;">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="assets/img/tera.jpg" width="400" height="218">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------------------otros servcicios 1------------------------->
+
+            <br>
+            <div id="horarios">
+
+                <div class="row " style="background-color:white ;">
+                    <div class="col mb-4">
+                        <div class="row">
+                            <strong class="mb-4 col-md-6 ms-2 text-primary text-start mt-4"
+                                style="border-bottom: 1px solid #dbdbdb">Horarios y días de atención</strong>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <img src="assets/img/servicios1.jpg" width="400" height="218">
+
+                            </div>
+                            <div class="col d-flex flex-column position-static text-start"
+                                style="background-color:white ;">
+
+                                <h3 class="mb-0"> </h3>
+                                <br>
+                                <div class="col text-start" style="margin-top: -25px; margin-left: -20px" *ngIf="posts">
+
+                                    <span style="display: block;">
+                                        <b>Desde: </b>{{ posts.horaDesde }} -
+                                        <b>Hasta: </b>{{ posts.horaHasta }}
+                                    </span>
+                                    <div *ngIf="posts != null">
+                                        <div *ngIf="HorariosDias ; else dias">
+
+                                            <b>Días de atención: </b> {{ posts.horas.name }}
+                                        </div>
+                                        <ng-template #dias>
+                                            <b>Días de atención: </b>
+                                            <span *ngFor="let hora of posts?.horas?.diasSemana">
+                                                <span *ngIf="hora.completed">
+                                                    {{hora.name | slice:0:3}}
+                                                </span>
+                                            </span>
+
+                                        </ng-template>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!----------------------Servicios adicionales 1-------------------------->
+            <hr>
+
+            <br>
+            <div class="row " style="background-color:white ;">
+                <div class="col mb-4">
+                    <div class="row">
+                        <strong class="mb-4 col-md-6 ms-1 text-primary text-start mt-4"
+                            style="border-bottom: 1px solid #dbdbdb">Servicios Complementarios</strong>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <img src="assets/img/adi.jpg" width="225" height="218">
+
+                        </div>
+                        <div class="col d-flex flex-column position-static text-start" style="background-color:white ;">
+
+                            <h3 class="mb-0"> </h3>
+                            <br>
+                            <div class="col" style="margin-top: -25px; margin-left: -20px" *ngIf="posts">
+                                <div *ngIf="serviciosAdicionalesFunc">
+
+                                    <span style="display: block;" *ngFor="let serv of (posts.serviciosAdicionales)">
+                                        <span *ngIf="serv.value">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px"
+                                                height="20px" width="20px" viewBox="0 0 50 50">
+                                                <path
+                                                    d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                            </svg>
+                                            {{ serv.name }}
+                                        </span>
+                                    </span>
+                                    <span style="margin-right: 5px; display: block;" *ngIf="posts.transporte !== 'No'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px" height="20px"
+                                            width="20px" viewBox="0 0 50 50">
+                                            <path
+                                                d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                        </svg>
+                                        <span>Transporte:</span> {{ posts.transporte }}
+
+                                    </span>
+                                    <span style="margin-right: 5px; display: block;"
+                                        *ngIf="posts.alimentacion === 'Si'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px" height="20px"
+                                            width="20px" viewBox="0 0 50 50">
+                                            <path
+                                                d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                        </svg>
+                                        <span>Alimentacion:</span> {{ posts.alimentacion }}
+
+                                    </span>
+                                    <span style="margin-right: 5px; display: block;" *ngIf="posts.aseo === 'Si'">
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px" height="20px"
+                                            width="20px" viewBox="0 0 50 50">
+                                            <path
+                                                d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                        </svg>
+                                        <span>Aseo:</span> {{ posts.aseo }}
+
+                                    </span>
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-center"
+                                    *ngIf="!serviciosAdicionalesFunc">
+                                    <span class="text-info">
+                                        El asilo no dispone de servicios complementarios por el momento, en un futuro
+                                        podrá implementarlos. Muchas gracias por la comprensión.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col mb-4">
+                    <div class="row">
+                        <strong class="mb-4 col-md-6 ms-2 text-primary text-start mt-4"
+                            style="border-bottom: 1px solid #dbdbdb">Instalaciones y Espacios</strong>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <img src="assets/img/insta.jpg" width="225" height="218">
+
+                        </div>
+                        <div class="col d-flex flex-column position-static text-start" style="background-color:white ;">
+
+                            <h3 class="mb-0"> </h3>
+                            <br>
+                            <div class="col" style="margin-top: -25px; margin-left: -20px" *ngIf="posts">
+                                <div *ngIf="serviciosComodidadFunc">
+
+                                    <span style="display: block;"
+                                        *ngFor="let serv of (posts.serviciosComodidad | mostrar)">
+                                        <span *ngIf="serv.value">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 8px"
+                                                height="20px" width="20px" viewBox="0 0 50 50">
+                                                <path
+                                                    d="M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                                            </svg>
+                                            {{ serv.name }}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center"
+                                    *ngIf="!serviciosComodidadFunc">
+                                    <span class="text-info">
+                                        El asilo no dispone de servicios de comodidad por el momento, en un futuro podrá
+                                        implementarlos. Muchas gracias por la comprensión.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- </ng-template> -->
+
+        <hr>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+            id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!------ Include the above in your HEAD tag ---------->
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+            id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!------ Include the above in your HEAD tag ---------->
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+            integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+
+
+    </div>
+</div>
+<div id="contacto">
+
+    <div style="width: 100vw">
+        <div class="wrapper">
+            <div class="overlay">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="contact-us text-center">
+                        <h3>Contáctanos</h3>
+                        <p>Para mas información de nuestro asilo puedes contactarnos</p>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center align-items-center">
+
+                    <div class="col-md-4">
+                        <div class="ms-3 text-center px-3">
+
+                            <div class="d-flex flex-row align-items-center"> 
+                                <span class="icons">
+                                    <i class="pi pi-map-marker p-3"></i>
+                                </span>
+                                <div class="address text-left"> <span>Dirección</span>
+                                    <p style="margin-left: 25px">{{posts.address}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center mt-3"> <span class="icons"><i
+                                        class="pi pi-phone"></i></span>
+                                <div class="address text-left"> <span>Teléfono</span>
+                                    <p style="margin-left: 20px">{{posts.fono}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center mt-3"> <span class="icons">
+                                    <i class="pi pi-envelope"></i>
+                                </span>
+                                <div class="address text-left"> <span>Correo</span>
+                                    <p style="margin-left: 20px">{{posts.email}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center mt-3"> <span class="icons">
+                                    <i class="pi pi-link"></i>
+                                </span>
+                                <div class="address text-left"> <span>Buscanos en redes Sociales
+                                        como:</span>
+                                    <p style="margin-left: 20px">{{posts.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div id="mapa" class="border" style="display:block"></div>
+                        <!-- <p-gmap [options]="optionsMapa" [style]="{'width': '100%', 'height': '450px'}"></p-gmap> -->
+                        <!-- <img src="assets/img/sani.jpg" width="500" height="450"> -->
+                        <!--div class="text-center px-1">
+                                        <div class="forms p-4 py-5 bg-white">
+                                            <h5>Enviar Mensaje</h5>
+                                            <div class="mt-4 inputs"> <input type="text" class="form-control"
+                                                    placeholder="Nombre"> <input type="text" class="form-control"
+                                                    placeholder="Correo"> <textarea class="form-control"
+                                                    placeholder="Escribe tu mensaje"></textarea> </div>
+                                            <div class="button mt-4 text-left"> <button
+                                                    class="btn btn-dark">Enviar</button> </div>
+                                        </div>
+                                    </!--div-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div id="contatti">
+
+            <div class="row" style="height:550px; width: 100%;">
+                <div class="col-md-6 maps">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11880.492291371422!2d12.4922309!3d41.8902102!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1c82e908503c4!2sColosseo!5e0!3m2!1sit!2sit!4v1524815927977"
+                        frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="text-uppercase mt-3 font-weight-bold text-white">CONTACTANOS</h2>
+
+                    <div class="text-white">
+                        <h2 class="text-uppercase mt-4 font-weight-bold">INFORMACION DEL ASILO</h2>
+
+                        <div style="position:relative">
+                            <div class="alert alert-info" style="width: 66.15%; height: 100px; opacity: 0.5"></div>
+                            <div style="position:absolute; margin-top: -100px; color: white">
+                                <h6>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                        <path
+                                            d="M28 19.3V16.9Q29.65 16.2 31.375 15.85Q33.1 15.5 35 15.5Q36.3 15.5 37.55 15.7Q38.8 15.9 40 16.2V18.4Q38.8 17.95 37.575 17.725Q36.35 17.5 35 17.5Q33.1 17.5 31.35 17.975Q29.6 18.45 28 19.3ZM28 30.3V27.85Q29.65 27.15 31.375 26.825Q33.1 26.5 35 26.5Q36.3 26.5 37.55 26.7Q38.8 26.9 40 27.2V29.4Q38.8 28.95 37.575 28.725Q36.35 28.5 35 28.5Q33.1 28.5 31.35 28.95Q29.6 29.4 28 30.3ZM28 24.8V22.4Q29.65 21.7 31.375 21.35Q33.1 21 35 21Q36.3 21 37.55 21.2Q38.8 21.4 40 21.7V23.9Q38.8 23.45 37.575 23.225Q36.35 23 35 23Q33.1 23 31.35 23.475Q29.6 23.95 28 24.8ZM12.4 33Q15.1 33 17.625 33.625Q20.15 34.25 22.6 35.5V14.15Q20.35 12.65 17.725 11.825Q15.1 11 12.4 11Q10.5 11 8.675 11.475Q6.85 11.95 5 12.65Q5 12.65 5 12.65Q5 12.65 5 12.65V34.35Q5 34.35 5 34.35Q5 34.35 5 34.35Q6.55 33.65 8.525 33.325Q10.5 33 12.4 33ZM25.6 35.5Q28.1 34.25 30.5 33.625Q32.9 33 35.6 33Q37.5 33 39.525 33.3Q41.55 33.6 43 34.1Q43 34.1 43 34.1Q43 34.1 43 34.1V12.65Q43 12.65 43 12.65Q43 12.65 43 12.65Q41.3 11.8 39.4 11.4Q37.5 11 35.6 11Q32.9 11 30.375 11.825Q27.85 12.65 25.6 14.15ZM24.1 40Q21.55 38.1 18.55 37.075Q15.55 36.05 12.4 36.05Q10.55 36.05 8.8 36.5Q7.05 36.95 5.3 37.6Q4.15 38.15 3.075 37.45Q2 36.75 2 35.45V12.3Q2 11.55 2.35 10.925Q2.7 10.3 3.4 9.95Q5.5 8.95 7.775 8.475Q10.05 8 12.4 8Q15.55 8 18.525 8.85Q21.5 9.7 24.1 11.45Q26.65 9.7 29.575 8.85Q32.5 8 35.6 8Q37.95 8 40.2 8.475Q42.45 8.95 44.55 9.95Q45.25 10.3 45.625 10.925Q46 11.55 46 12.3V35.45Q46 36.85 44.875 37.575Q43.75 38.3 42.65 37.6Q40.95 36.9 39.2 36.475Q37.45 36.05 35.6 36.05Q32.45 36.05 29.55 37.1Q26.65 38.15 24.1 40ZM13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Q13.8 23.55 13.8 23.55Z" />
+                                    </svg>
+                                    DIRECCIÓN
+                                </h6>
+                                <p style="margin-left: 40px">{{posts.address}}</p>
+                            </div>
+
+                        </div>
+                        <div style="position:relative">
+                            <div class="alert alert-info" style="width: 66.15%; height: 100px; opacity: 0.5">
+                            </div>
+                            <div style="position:absolute; margin-top: -100px; color: white">
+                                <h6 style="color: white; font-weight: 900;">
+
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                        <path
+                                            d="M24 42.25Q24.65 42.25 25.075 41.825Q25.5 41.4 25.5 40.75Q25.5 40.1 25.075 39.675Q24.65 39.25 24 39.25Q23.35 39.25 22.925 39.675Q22.5 40.1 22.5 40.75Q22.5 41.4 22.925 41.825Q23.35 42.25 24 42.25ZM13 35.5H35V9.5H13ZM13 46Q11.8 46 10.9 45.1Q10 44.2 10 43V5Q10 3.8 10.9 2.9Q11.8 2 13 2H35Q36.2 2 37.1 2.9Q38 3.8 38 5V43Q38 44.2 37.1 45.1Q36.2 46 35 46ZM13 6.5H35V5Q35 5 35 5Q35 5 35 5H13Q13 5 13 5Q13 5 13 5ZM13 5Q13 5 13 5Q13 5 13 5V6.5V5Q13 5 13 5Q13 5 13 5ZM13 38.5V43Q13 43 13 43Q13 43 13 43H35Q35 43 35 43Q35 43 35 43V38.5ZM13 43Q13 43 13 43Q13 43 13 43V38.5V43Q13 43 13 43Q13 43 13 43Z" />
+                                    </svg>
+                                    TELÉFONO
+                                </h6>
+                                <p style="margin-left: 40px">{{posts.fono}}</p>
+                            </div>
+                        </div>
+                        <div style="position:relative">
+                            <div class="alert alert-info" style="width: 66.15%; height: 100px; opacity: 0.5"></div>
+                            <div style="position:absolute; margin-top: -100px; color: white">
+                                <h6>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                                        <path
+                                            d="M7 40Q5.8 40 4.9 39.1Q4 38.2 4 37V11Q4 9.8 4.9 8.9Q5.8 8 7 8H41Q42.2 8 43.1 8.9Q44 9.8 44 11V37Q44 38.2 43.1 39.1Q42.2 40 41 40ZM24 24.9 7 13.75V37Q7 37 7 37Q7 37 7 37H41Q41 37 41 37Q41 37 41 37V13.75ZM24 21.9 40.8 11H7.25ZM7 13.75V11V13.75V37Q7 37 7 37Q7 37 7 37Q7 37 7 37Q7 37 7 37Z" />
+                                    </svg>
+                                    CORREO
+                                </h6>
+                                <p style="margin-left: 40px">{{posts.email}}</p>
+                            </div>
+
+                        </div>
+                        <div style="position:relative">
+                            <div class="alert alert-info" style="width: 66.15%; height: 100px; opacity: 0.5"></div>
+                            <div style="position:absolute; margin-top: -100px; color: white">
+                                <h6>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0  50 50">
+                                        <path
+                                            d="M24 23.95Q20.7 23.95 18.6 21.85Q16.5 19.75 16.5 16.45Q16.5 13.15 18.6 11.05Q20.7 8.95 24 8.95Q27.3 8.95 29.4 11.05Q31.5 13.15 31.5 16.45Q31.5 19.75 29.4 21.85Q27.3 23.95 24 23.95ZM8 40V35.3Q8 33.4 8.95 32.05Q9.9 30.7 11.4 30Q14.75 28.5 17.825 27.75Q20.9 27 24 27Q27.1 27 30.15 27.775Q33.2 28.55 36.55 30Q38.1 30.7 39.05 32.05Q40 33.4 40 35.3V40ZM11 37H37V35.3Q37 34.5 36.525 33.775Q36.05 33.05 35.35 32.7Q32.15 31.15 29.5 30.575Q26.85 30 24 30Q21.15 30 18.45 30.575Q15.75 31.15 12.6 32.7Q11.9 33.05 11.45 33.775Q11 34.5 11 35.3ZM24 20.95Q25.95 20.95 27.225 19.675Q28.5 18.4 28.5 16.45Q28.5 14.5 27.225 13.225Q25.95 11.95 24 11.95Q22.05 11.95 20.775 13.225Q19.5 14.5 19.5 16.45Q19.5 18.4 20.775 19.675Q22.05 20.95 24 20.95ZM24 16.45Q24 16.45 24 16.45Q24 16.45 24 16.45Q24 16.45 24 16.45Q24 16.45 24 16.45Q24 16.45 24 16.45Q24 16.45 24 16.45Q24 16.45 24 16.45Q24 16.45 24 16.45ZM24 37Q24 37 24 37Q24 37 24 37Q24 37 24 37Q24 37 24 37Q24 37 24 37Q24 37 24 37Q24 37 24 37Q24 37 24 37Z" />
+                                    </svg>
+                                    CONTACTO
+                                </h6>
+                                <p style="margin-left: 40px">{{posts.name}}</p>
+                            </div>
+
+
+                    </div>index
+                    </div>
+                </div>
+            </div>
+
+        </div> 
+</div>-->
+<app-messageasilo [dataAsilo]="posts" #asilomessage (invitadoEvent)="invitadoFun($event)" (idDocString)="idDocFun($event)"></app-messageasilo>

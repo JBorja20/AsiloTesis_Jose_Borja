@@ -1,0 +1,303 @@
+<mat-drawer-container class="example-container" width="700" height="100vh" style="height: 100%; width: 100%;" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+
+    <div class="d-flex flex-column flex-shrink-0 p-5 text-white bg-dark" style=" width: 100%; height: 100vh;">
+      <div class="row">
+        <div class="col text-center">
+
+          <p-avatar [image]="data?.foto != '' ? data?.foto : '/assets/img/no-photo.png'" alt="no photo " shape="circle"
+            size="xlarge"></p-avatar>
+        </div>
+      </div>
+      <div class="row">
+        <div class="d-flex justify-content-center ">
+          <span style="font-size: 18px">{{nombre}}</span>
+
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+          <small style="font-size:13px; margin-top: -7px">Administrador</small>
+        </div>
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+
+        <li class="nav-item mt-3">
+          <a routerLink="/gerente/profile" class="nav-link active" aria-current="page">
+            <i class="pi pi-user me-3"></i>
+            Perfil
+          </a>
+        </li>
+        <li class="nav-item mt-4">
+          <a routerLink="/gerente/show" class="nav-link active" aria-current="page">
+            <i class="pi pi-book me-3"></i>
+            Afiliados
+          </a>
+        </li>
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <p-avatar [image]="data?.foto != '' ? data?.foto : '/assets/img/no-photo.png'" alt="no photo " shape="circle"></p-avatar>
+          <strong class="ps-2">Cerrar Sesión</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+
+          <li (click)="cerrar()"><a class="dropdown-item btn">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </mat-drawer>
+
+  <div style="width: 100%">
+    <!--button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </!--button-->
+    <mat-toolbar color="primary">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+      </button>
+
+    </mat-toolbar>
+
+  </div>
+  <!-- ======================================================================================================= -->
+  <!-- 
+
+    <app-elnombrequelepongas [data]="" [dataUser] ="" [idDoc]=""></app-elnombrequelepongas>
+   -->
+  <div class="d-flex justify-content-center">
+    <div class="row bg-info text-white" style="border: 1px solid #CCC; border-radius: 5px; width:95%;  height: 55px; box-shadow: 0 0 10px rgb(163, 163, 163);">
+      
+      <h4 style="line-height: 51px;">Este módulo te permite gestionar los asilos que desean formar parte del sistema web </h4>
+    </div>
+    
+
+  </div>
+<br>
+
+  <div style="width: 100%;">
+
+    <mat-tab-group mat-align-tabs="center" class="text-center ms-2" style="width: 98%">
+
+      <mat-tab label="Asilos pendientes">
+
+
+        <br>
+
+        <div class="row" style=" width: 100%;" *ngIf="postPendientes.length > 0">
+          <div class="d-flex justify-content-center align-items-center">
+
+            <div class="col-md-10">
+              <div class="row">
+                <mat-form-field appearance="standard">
+                  <mat-label>Buscar</mat-label>
+                  <input matInput (keyup)="bucarValor($event.target)" placeholder="Ex. nombre" #input>
+                </mat-form-field>
+              </div>
+              <div class="mat-elevation-z8">
+  
+                <table mat-table [dataSource]="dataSource" style="align-content:center ;">
+  
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef class="text-start"> Nombre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="cedula">
+                    <th mat-header-cell *matHeaderCellDef> Cédula </th>
+                    <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
+                  </ng-container>
+  
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="direcicon">
+                    <th mat-header-cell *matHeaderCellDef> Dirección </th>
+                    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                  </ng-container>
+  
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Correo </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                  </ng-container>
+  
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="telefono">
+                    <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fono}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="accion">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let element">
+                      <a [href]="element.foto" *ngIf="element.foto !== ''" target="_blank" title="Imagen"
+                        class="btn btn-outline-info">
+                        <i class="fa-solid fa-image"></i>
+                      </a>
+                      <a [href]="element.documento" target="_blank" *ngIf="element.documento !== ''" title="documento"
+                        class="btn btn-outline-info">
+                        <i class="fa-solid fa-book"></i>
+                      </a>
+  
+                      <button title="Aprobar" (click)="aprobar(element)" class="btn btn-outline-success">
+                        <i class="fa-solid fa-check"></i></button>
+                      <button title="Rechazar" (click)="rechazar(element)" class="btn btn-outline-danger">
+                        <i class="fa-light fa-x"></i></button>
+  
+                      <button title="Borrar" (click)="deleteRow(element)" class="btn btn-outline-danger"><i
+                          class="fa-solid fa-trash"></i></button>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnspendientes"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnspendientes;"></tr>
+                </table>
+                <mat-paginator id="pendientes" [pageSizeOptions]="[4, 8, 12]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+  
+              <!-- <table class="table" >
+                <thead class="table-dark">
+                  <tr>
+                    <th>nombre</th>
+                    <th>direcicon</th>
+                    <th>email</th>
+                    <th>telefono</th>
+                    <th>ACCION</th>
+      
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let post of postPendientes">
+                    <td>{{post.data.name}}</td>
+                    <td>{{post.data.address}}</td>
+                    <td>{{post.data.email}}</td>
+                    <td>{{post.data.fono}}</td>
+      
+                    <td>
+                      
+                      <a [href]="post.data.foto" *ngIf="post.data.foto !== ''" target="_blank" class="btn btn-outline-info">
+                        <i class="fa-solid fa-image"></i>
+                      </a>
+                      <a [href]="post.data.documento" target="_blank" *ngIf="post.data.documento !== ''" class="btn btn-outline-info">
+                        <i class="fa-solid fa-book"></i>
+                      </a>
+                      
+                      <button title="Aprobar" (click)="aprobar(post)" class="btn btn-outline-success">
+                        <i class="fa-solid fa-check"></i></button>
+                      <button title="Rechazar" (click)="rechazar(post)" class="btn btn-outline-danger">
+                        <i class="fa-light fa-x"></i></button>
+      
+                      <button title="Borrar" (click)="deleteRow(post)" class="btn btn-outline-danger"><i
+                          class="fa-solid fa-trash"></i></button>
+      
+                    </td>
+                  </tr>
+                </tbody>
+              </table> -->
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row" style="text-align:center; width: 97%;" *ngIf="postPendientes.length == 0">
+          <div class="col" style="text-align:center; width: 97%;">
+            <p>No existen registros de asilos pendientes</p>
+          </div>
+        </div>
+
+
+      </mat-tab>
+
+      <mat-tab label="Asilos Aprobados">
+        <br>
+
+
+        <div class="row mb-4" style="width: 98%">
+          <div class="d-flex justify-content-center">
+            
+            <div class="col-md-10">
+              <div class="row">
+                <mat-form-field appearance="standard">
+                  <mat-label>Buscar</mat-label>
+                  <input matInput (keyup)="bucarValorAprobados($event.target)" placeholder="Ex. nombre" #input>
+                </mat-form-field>
+              </div>
+              <div class="mat-elevation-z8">
+  
+                <table mat-table [dataSource]="dataSourceAprobados" class="table-dark">
+  
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef class="text-start"> Nombre </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+  
+                  <ng-container matColumnDef="cedula">
+                    <th mat-header-cell *matHeaderCellDef class="text-start"> Cédula </th>
+                    <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
+                  </ng-container>
+  
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="direcicon">
+                    <th mat-header-cell *matHeaderCellDef class="text-start"> Dirección </th>
+                    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                  </ng-container>
+  
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef class="text-start"> Correo </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                  </ng-container>
+  
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="telefono">
+                    <th mat-header-cell *matHeaderCellDef class="text-start"> Teléfono </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fono}} </td>
+                  </ng-container>
+  
+  
+  
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator id="aprobados" [pageSizeOptions]="[4, 8, 12]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Asilos rechazados">
+        <app-rechazados #recargar></app-rechazados>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+
+</mat-drawer-container>
+
+
+
+<!-- <mat-drawer-container class="example-container" width="600" height="100vh" style="height: 100%; overflow-x: hidden;" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+
+    
+
+  </mat-drawer>
+
+  <div style="width: 100%;">
+    <mat-toolbar color="primary" style="width: 100%; border: 1px solid black; margin-left: -5px;">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+      </button>
+
+    </mat-toolbar>
+  </div>
+  
+
+
+</mat-drawer-container> -->

@@ -1,0 +1,76 @@
+.complete-message{
+    border: 1px solid black;
+    display: flex;
+    height: calc(100% - 64px);
+    // justify-content: space-around;
+    width: 100%;
+}
+
+.column-messages{
+    width: 30%;
+    border: 1px solid #eee;
+    display: block;
+}
+
+.content-messages{
+    width: 70%;
+    border: 1px solid #eee;
+}
+
+.fila{
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.fila-img{
+    width: 30%;
+    border: 1px solid #eee;
+    display: block;
+
+}
+.fila-nombre{
+    width: 70%;
+    border: 1px solid #eee;
+    display: block;
+
+}
+
+.fila div.ulultimo-mensaje{
+    width: 100%;
+    border: 1px solid black;
+    display: block;
+}
+
+.message-input{
+    background: none;
+    border: none;
+    outline: none !important;
+    resize: none;
+    font-size: 15px;
+    height: 35px;
+    scrollbar-color: rgb(173, 172, 172) white;
+    scrollbar-width: thin;
+    margin-top: 2px;
+    width: 100%;
+    color: #444;
+    margin-bottom: 0;
+}
+
+textarea::placeholder{
+    padding-top: 3px;
+}
+
+.message-input::-webkit-scrollbar{
+    width: 8px;
+  }
+  
+  .message-input::-webkit-scrollbar-track{
+    background: white;
+  }
+  
+  .message-input::-webkit-scrollbar-thumb{
+    background-color: rgb(173, 172, 172);
+    border-radius: 20px;
+    border: 3px solid rgb(173, 172, 172);;
+  }

@@ -1,0 +1,1169 @@
+<mat-drawer-container class="example-container" width="700" height="100vh" style="height: 100%" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+    <div class="d-flex flex-column flex-shrink-0 p-5 text-white bg-dark" style="height: 100vh;">
+      <div class="row" style="display: block;">
+        <div class="col text-center">
+
+          <p-avatar
+
+            [image]="mostrarImagen" alt="no photo " shape="circle" size="xlarge"></p-avatar>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="d-flex justify-content-center">
+ 
+          <span style="font-size:18px; display: block;">{{nombre}}</span>
+        </div>
+        <div class="d-flex justify-content-center">
+          <small style="font-size: 13px;" class="mt-1">Asilo</small>
+        </div>
+
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mt-4" routerLink="/asilo/profile">
+          <a routerLink="/asilo/profile" class="nav-link active" aria-current="page">
+            <i class="pi pi-user me-3"></i>
+            Perfil
+          </a>
+        </li>
+        <li class="nav-item mt-4" *ngIf="!aprobado">
+          <a routerLink="/asilo/regis-asi" class="nav-link active">
+            <i class="pi pi-file me-3"></i>
+            Afiliación
+          </a>
+        </li>
+        <li class="nav-item mt-4" *ngIf="aprobado">
+          <a routerLink="/asilo/info" class="nav-link active">
+            <i class="pi pi-user me-3"></i>
+            <span style="font-size: 15px;">
+              Información general
+            </span>
+          </a>
+        </li>
+        <li class="nav-item mt-4" *ngIf="aprobado">
+          <a [routerLink]="['/asilo/mensajes/', uid]" class="nav-link active">
+            <i class="pi pi-user me-3"></i>
+            <span style="font-size: 15px;">
+              Mensajes
+            </span>
+          </a>
+        </li>
+
+
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" role="button"
+          id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <p-avatar
+            [image]="mostrarImagen"
+            alt="no photo " shape="circle" class="ms-3"></p-avatar>
+          <strong class="ps-2">Cerrar Sesion</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+
+          <li (click)="cerrar()"><a class="dropdown-item btn">Cerrar Sesion</a></li>
+        </ul>
+      </div>
+    </div>
+  </mat-drawer>
+
+
+  <div class="row example-sidenav-content" style="width: 100%;">
+    <mat-toolbar color="primary">
+      <button type="button" mat-button (click)="abrirSide(drawer)">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+      </button>
+
+    </mat-toolbar>
+
+  </div>
+  <div class="row mt-5 mb-5 pb-5"
+    style="display: flex; justify-content: center; margin:auto; height: auto; width: auto;  border: 1px solid #CCC; border-radius: 5px; width:85%;  box-shadow: 0 0 10px rgb(163, 163, 163);">
+    <div class="row bg-info text-white"
+      style="border: 1px solid #CCC; border-radius: 5px; width:95%;  height: 55px; box-shadow: 0 0 10px rgb(163, 163, 163); margin-top:-25px">
+      <h4 style="line-height: 51px;">Gestión de la información del asilo</h4>
+    </div>
+    <div class="col mt-5">
+
+      <mat-stepper labelPosition="bottom" #stepper (selectionChange)="cambioStep(stepper)">
+        <mat-step [stepControl]="misionGroup">
+          <form [formGroup]="misionGroup" class="container" (ngSubmit)="misionvision()">
+            <ng-template matStepLabel>Misión y visión</ng-template>
+            <h5>Esta sección te permite agregar la misión y visión del asilo</h5>
+            <div style="display:flex; justify-content: center;">
+
+              <div style="width: 45%">
+                <div class="mb-3">
+
+                  <label class="form-label">Misión</label>
+                  <textarea style="width: 100%; height: 100px; resize: none;" formControlName="mision"
+                    class="form-control" required></textarea>
+                </div>
+                <div class="row" *ngIf="errorMision">
+                  <span class="text-danger">
+                    La misión es un campo obligatorio y no puede estar vacio.
+                  </span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Visión</label>
+                  <textarea style="width: 100%; height: 100px; resize: none" formControlName="vision" type="text"
+                    class="form-control" required></textarea>
+                </div>
+                <div class="row" *ngIf="errorVision">
+                  <span class="text-danger">
+                    La visión es un campo obligatorio y no puede estar vacio.
+                  </span>
+                </div>
+                <div>
+                  <button mat-button type="submit" class="btn btn-primary">Actualizar</button>
+                  <button mat-raised-button class="btn btn-success" style="margin: 7px;" matStepperNext>Siguiente</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup" class="container">
+            <ng-template matStepLabel>Datos Personales</ng-template>
+            <div class="row text-center">
+
+              <h5>Esta sección te permite llenar los datos básicos del asilo</h5>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <div style="width: 45%">
+
+                <div class="mb-3">
+
+                  <label class="form-label">Cédula/RUC</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-id-card"></i>
+                    </span>
+                    <input formControlName="cedula" name="cedula" id="cedula" type="text" class="form-control" required>
+                  </div>
+                </div>
+                <div class="row" *ngIf="errorCedula">
+                  <span class="text-danger">
+                    La cédula es un campo obligatorio.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorCedulaMin">
+                  <span class="text-danger">
+                    El campo cédula debe tener entre 10 y 13 caracteres respectivamente para cédula o RUC.
+                  </span>
+                </div>
+                <div class="mb-3">
+                  <!-- <h3>Esta seccion informativa permite llenar los datos del asilo</h3> -->
+                  <label class="form-label">Nombre</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-user"></i>
+                    </span>
+                    <input formControlName="name" name="name" id="name" type="text" class="form-control" required>
+                  </div>
+                  <div class="row text-start" *ngIf="errorNombre">
+                    <span class="text-danger">
+                      El nombre es un campo obligatorio
+                    </span>
+                  </div>
+                  <div class="row" *ngIf="errorNombrePattern">
+                    <span class="text-danger">
+                      El campo nombre no puede contener números y caracteres especiales.
+                    </span>
+                  </div>
+                  <div class="row" *ngIf="errorNombreMax">
+                    <span class="text-danger">
+                      El campo nombre debe tener un máximo de 20 caracteres.
+                    </span>
+                  </div>
+                </div>
+                <!-- <div class="mb-3">
+                  <label class="form-label">Dirección</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-map"></i>
+                    </span>
+                    <input formControlName="address" name="address" type="text" class="form-control" required>
+                  </div>
+                  <div class="row text-start" *ngIf="errorAddress">
+                    <span class="text-danger">
+                      La dirección es un campo obligatorio
+                    </span>
+                  </div>
+                </div> -->
+                <div class="mb-3">
+                  <label class="form-label">Correo</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-envelope"></i>
+                    </span>
+                    <input formControlName="email" type="text" class="form-control" required>
+                  </div>
+                  <div class="row text-start" *ngIf="errorEmail">
+                    <span class="text-danger">
+                      El correo es un campo obligatorio
+                    </span>
+                  </div>
+                  <div class="row text-start" *ngIf="errorEmailPattern">
+                    <span class="text-danger">
+                      El correo no es valida ya que debe seguir el siguiente patron, nombre@dominio.com
+                    </span>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Telefono</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-phone"></i>
+                    </span>
+                    <input formControlName="fono" type="number" class="form-control" required>
+                  </div>
+                  <div class="row text-start" *ngIf="errorFono">
+                    <span class="text-danger">
+                      El teléfono es un campo obligatorio.
+                    </span>
+                  </div>
+                  <div class="row text-start" *ngIf="errorFonoPattern">
+                    <span class="text-danger">
+                      El teléfono debe tener entre 7 a 10 digitos respectivamente si es teléfono convencional o celular.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="d-flex justify-content-center">
+
+              <button mat-raised-button class="btn btn-primary" (click)="actualizar($event)">Actualizar</button>
+               <button mat-raised-button class="btn btn-success" style="margin: 7px;" matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="ubicacionForm">
+          <ng-template matStepLabel>Ubicación del establecimiento</ng-template>
+          <div class="row">
+            <h5>Esta sección te permite seleccionar la ubicación del asilo</h5>
+          </div>
+          <div class="row">
+            <p-tree [value]="dataTree" class="mb-2"></p-tree>
+          </div>
+          <form [formGroup]="ubicacionForm"  style="width: 100%">
+
+            <div class="row">
+              <div class="col col-md-7 ">
+
+
+                <div class="mb-3">
+                  <label class="form-label">Referencia: <i class="pi pi-map"></i></label>
+                  <p>{{direccion}}</p>
+                  <input formControlName="address" type="hidden"
+                  class="form-control auto-height" readonly>
+
+                </div>
+                <div class="row" *ngIf="loading">
+                  <span class="text-info">
+                    <i class="pi pi-spin pi-spinner"></i>
+                    Espere un momento estamos obteniendo la referencia.
+                  </span>
+                </div>
+
+              </div>
+              <div class="col"c></div>
+              <div class="col col-md-4" *ngIf="coords !== undefined">
+                <div class="row">
+
+                  <p>Georeferenciación: </p>
+                </div>
+                <div class="row">
+                  <div class="d-flex justify-content-start align-items-center">
+                    
+                    <p>( {{coords?.lat | number:'1.1-6'}}, {{coords?.lng | number:'1.1-6'}})</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+          <div class="row" *ngIf="coordsBoolean">
+            <span class="text-danger">
+              Debe indicar la ubicación de su establecimiento en el mapa.
+            </span>
+          </div>
+          <div #mapaDiv id="mapa" class="mapa"></div>
+
+
+          
+
+          <div class="d-flex justify-content-center align-items-center">
+            <button mat-raised-button [disabled]="!ubicacionForm.invalid && coords == undefined" class="btn btn-primary" (click)="actualizarUbicaciones($event)">Actualizar</button>
+            <button mat-raised-button  class="btn btn-success" style="margin: 7px;" matStepperNext>Siguiente</button>
+            <!-- <button mat-button  matStepperPrevious type="button"
+                class="btn btn-primary me-2 mt-2">Atras</button>
+            <button mat-button [disabled]="!ubicacionForm.invalid && coords == undefined" matStepperNext type="button"
+                class="btn btn-primary ms-1 mt-2" (click)="siguienteUbicacion()">Siguiente</button> -->
+          </div>
+
+        </mat-step>
+        <mat-step [stepControl]="SecondFormGroup">
+
+          <ng-template matStepLabel>Horario de Atención</ng-template>
+          <div class="mb-3">
+            <h5>Esta sección te permite seleccionar los horarios y dias de atención del asilo </h5>
+            <label class="form-label">Selecione días de atención
+              <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                ngbPopover="Sleeciones los dias de atencion del asilo." triggers="mouseenter:mouseleave"
+                xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                <path
+                  d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+              </svg>
+            </label>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <mat-checkbox [checked]="allComplete" [color]="dias.color" [indeterminate]="algunasCompletadas()"
+                    (change)="setearTodos($event.checked)">
+                    {{ dias.name }}
+                  </mat-checkbox>
+                  <ul>
+                    <li *ngFor="let dia of dias.diasSemana">
+                      <mat-checkbox [color]="dia.color" [(ngModel)]="dia.completed"
+                        (ngModelChange)="actualizarSeleccionados()">{{ dia.name }}</mat-checkbox>
+                    </li>
+                  </ul>
+                  <div class="row" *ngIf="verificarFalse">
+                    <span class="text-danger">
+                      Debe seleccionar por lo menos una dia de atención
+                    </span>
+                  </div>
+                </div>
+                <div class="col">
+
+                  <label class="form-label">Seleccione hora de atención
+                    <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                      ngbPopover="seleccione el horario de atencion del asilo" triggers="mouseenter:mouseleave"
+                      xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                      <path
+                        d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                    </svg>
+                  </label>
+                  <br>
+                  <div class="row">
+                    <span><b> Inicio:</b></span>
+                    <input type="time" class="form-control" [(ngModel)]="horaDesde" step="1800" min="06:00" (ngModelChange)="cambioHoraFinal()">
+                    <div class="row text-start" *ngIf="horaDesde == ''">
+                      <span class="text-danger">
+                        Debe indicar la hora de inicio ejemplo (08:00)
+                      </span>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <span><b> Fin:</b></span>
+                    <input type="time" class="form-control" [(ngModel)]="horaHasta" (ngModelChange)="cambioHoraFinal()"
+                      max="22:00">
+                    <div class="row text-start" *ngIf="horaHasta == ''">
+                      <span class="text-danger">
+                        Debe indicar una hora fin ejemplo (17:30).
+                      </span>
+                    </div>
+                    <div class="row text-start" *ngIf="horainicialMayor">
+                      <span class="text-danger">
+                        La hora final no puede ser menor a la inicial.
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row text-start" *ngIf="horaiguales">
+                    <span class="text-danger">
+                      La hora inicial y final no pueden ser iguales.
+                    </span>
+                  </div>
+                  <div class="row text-start" *ngIf="horamenorocho">
+                    <span class="text-danger">
+                      Debe haber una intervalo de por lo menos 8 horas.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <!-- <button mat-button matStepperPrevious>Back</button> -->
+            <button mat-raised-button class="btn btn-primary" matStepperNext [disabled]="horainicialMayor || horaiguales || horamenorocho" (click)="actualizarHorarios()">Actualizar</button>
+          </div>
+
+        </mat-step>
+        <mat-step [stepControl]="fourthFormGroup" *ngIf="aprobado">
+          <form [formGroup]="fourthFormGroup" class="container">
+            <ng-template matStepLabel>Servicios</ng-template>
+            <div class="row">
+              <h5>Esta sección te permite seleccionar los servicios que brinda el asilo</h5>
+
+            </div>
+            <!-- Alimentacion -->
+            <div class="row mt-4" style="border: 1px solid #ccc">
+              <div class="col">
+                <div class="row">
+
+                  <label class="form-label">Alimentacion
+                    <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                      ngbPopover="Selecione si presentan servicio de alimentacion." triggers="mouseenter:mouseleave"
+                      xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                      <path
+                        d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                    </svg>
+                  </label>
+                </div>
+                <div class="row mt-2 ">
+                  <div class="col-md-4">
+                    <mat-form-field appearence="fill">
+                      <mat-label>Seleccione una..</mat-label>
+                      <mat-select formControlName="alimentacion" (valueChange)="cambioValorAlimentacion($event)">
+                        <mat-option value="">Seleccionee...</mat-option>
+                        <mat-option value="Si">Si</mat-option>
+                        <mat-option value="no">No</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+
+                  </div>
+                  <div class="col text-start" *ngIf="alimentacionBool">
+                    <span class="text-danger">
+                      Debe seleccionar al menos una opcion si dispone.
+                    </span>
+                  </div>
+                  <div class="col text-start" *ngIf="errorAlimentacion">
+                    <span class="text-danger">
+                      Debe seleccionar al menos una opcion si dispone.
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col">
+                <div class="row">
+
+                  <label class="form-label">Aseo personal
+                    <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                      ngbPopover="Selecione si presentan servicio de aseo personal." triggers="mouseenter:mouseleave"
+                      xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                      <path
+                        d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                    </svg>
+                  </label>
+                </div>
+                <div class="row mt-2 ">
+                  <div class="col-md-4">
+                    <mat-form-field appearence="fill">
+                      <mat-label>Seleccione una..</mat-label>
+                      <mat-select formControlName="aseo" value="0" (valueChange)="cambioValorAseo($event)">
+
+                        <mat-option value="">Seleccionee...</mat-option>
+                        <mat-option value="si">Si</mat-option>
+                        <mat-option value="no">No</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+
+                  </div>
+                  <div class="col text-start" *ngIf="aseoBool">
+                    <span class="text-danger">
+                      Debe selecionar al menos una opcion si dispone.
+                    </span>
+                  </div>
+                  <div class="col text-start" *ngIf="errorAseo">
+                    <span class="text-danger">
+                      Debe selecionar al menos una opcion si dispone.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="row">
+
+                  <label class="form-label">Transporte
+                    <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                      ngbPopover="Selecione si presentan servicio de transporte." triggers="mouseenter:mouseleave"
+                      xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50">
+                      <path
+                        d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                    </svg>
+                  </label>
+                  
+                </div>
+                <div class="row mt-2 ">
+                  <div class="col-md-4">
+                    <mat-form-field appearence="fill">
+                      <mat-label>Seleccione una..</mat-label>
+                      <mat-select (valueChange)="transporte($event)" formControlName="transporte" value="0">
+                        <mat-option value="">Seleccione..</mat-option>
+                        <mat-option *ngFor="let control of transportes" [value]="control.name">{{ control.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+
+                  </div>
+                  <div class="col text-start" *ngIf="transporteBool">
+                    <span class="text-danger">
+                      La debe seleccionar al menos una opcion si dipone.
+                    </span>
+                  </div>
+                  <div class="col text-start" *ngIf="errorTransporte">
+                    <span class="text-danger">
+                      La debe seleccionar al menos una opcion si dipone.
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col info__asilo">
+                <div class=" info__asilo__label">
+                  
+                </div>
+                
+
+              </div> -->
+
+            </div>
+            <!-- aseo personal -->
+            <!-- <div></div>
+            <div class="row mt-5">
+              <div class="col info__asilo">
+                
+              </div>
+            </div>
+            
+            <div></div>
+            <div class="row mt-5">
+              <div class="col info__asilo">
+                
+                <div class="row">
+                  <div class="info__asilo__expand__content"></div>
+                </div>
+              </div>
+            </div> -->
+            <!-- servicio medico -->
+            <div class="row mt-5">
+              <div class="col info__asilo__expand">
+                <!-- <div class="info__asilo__label">
+                    <label class="form-label label__padding">Servicios Medicos
+                      
+                    </label>
+                  </div> -->
+                <div class="row info__asilo__label">
+                  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                    <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                      <!-- {{node.name}} -->
+                      <mat-checkbox [checked]="node.value" (change)="serviciosmedicos($event)" [value]="node.name">
+                        {{node.name}}
+                      </mat-checkbox>
+                    </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                      <!-- {{node }} -->
+                      <div style="margin-left: -20px; width: 100%">
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                          <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                          </mat-icon>
+                        </button>
+                        <span style="font-size: 18px">{{node.name}}
+                          <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                            ngbPopover="Son servicios que presta el asilo parael cuidado permanente del adulto mayor."
+                            triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                            viewBox="0 0 50 50">
+                            <path
+                              d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                          </svg>
+                        </span>
+
+                      </div>
+                      <!-- There is inline padding applied to this div using styles.
+                               This padding value depends on the mat-icon-button width.  -->
+                      <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                      </div>
+                    </mat-nested-tree-node>
+
+                  </mat-tree>
+                </div>
+                <div class="row">
+                  <div class="info__asilo__expand__content"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Servicios Sanitarios -->
+            <div class="row mt-5">
+              <div class="col info__asilo__expand">
+                <!-- <div class="info__asilo__label">
+                    <label class="form-label label__padding">Servicios Sanitarios
+                      
+                    </label>
+                  </div> -->
+                <div class="row info__asilo__label">
+
+                  <mat-tree [dataSource]="dataSourceSanitarios" [treeControl]="treeControlSanitarios">
+                    <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                      <!-- {{node.name}} -->
+                      <mat-checkbox [checked]="node.value" (change)="serviciosSanitariosFun($event)"
+                        [value]="node.name">
+                        {{node.name}}
+                      </mat-checkbox>
+                    </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                      <div style="margin-left: -30px; width: 100%">
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                          <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControlSanitarios.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                          </mat-icon>
+                        </button>
+                        <span style="font-size: 18px">{{node.name}}
+                          <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                            ngbPopover="Son servicios que presta el asilo al adulto mayor para su bienestar y debe seleccionar cual desea ocupar."
+                            triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                            viewBox="0 0 50 50">
+                            <path
+                              d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                          </svg>
+                        </span>
+
+                      </div>
+                      <!-- There is inline padding applied to this div using styles.
+                                This padding value depends on the mat-icon-button width.  -->
+                      <div [class.example-tree-invisible]="!treeControlSanitarios.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                      </div>
+                    </mat-nested-tree-node>
+
+                  </mat-tree>
+                </div>
+                <div class="row">
+                  <div class="info__asilo__expand__content"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Servicios de atencion -->
+            <div class="row mt-5">
+              <div class="col info__asilo__expand">
+                <!-- <div class="info__asilo__label">
+                    <label class="form-label label__padding">Servicios de atencion
+                      
+                    </label>
+                  </div> -->
+                <div class="row info__asilo__label">
+
+                  <mat-tree [dataSource]="dataSourceAtencion" [treeControl]="treeControlAtencion">
+                    <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                      <!-- {{node.name}} -->
+                      <mat-checkbox [checked]="node.value" (change)="serviciosAtencion($event)" [value]="node.name">
+                        {{node.name}}
+                      </mat-checkbox>
+                    </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildAte">
+                      <div style="margin-left: -30px; width: 100%">
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                          <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControlAtencion.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                          </mat-icon>
+                        </button>
+                        <span style="font-size: 18px">{{node.name}}
+                          <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                            ngbPopover="Son servicios que presta el asilo al adulto mayor para su bienestar y debe seleccionar cual desea ocupar."
+                            triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                            viewBox="0 0 50 50">
+                            <path
+                              d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                          </svg>
+                        </span>
+
+                      </div>
+                      <!-- There is inline padding applied to this div using styles.
+                               This padding value depends on the mat-icon-button width.  -->
+                      <div [class.example-tree-invisible]="!treeControlAtencion.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                      </div>
+                    </mat-nested-tree-node>
+                  </mat-tree>
+                </div>
+                <div class="row">
+                  <div class="info__asilo__expand__content"></div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- servicios terapeuticos -->
+            <div class="row mt-5">
+              <div class="col info__asilo__expand">
+                <!-- <div class="info__asilo__label">
+                    <label class="form-label label__padding">Servicios Terapeuticos
+                      
+                    </label>
+
+                  </div> -->
+                <div class="row info__asilo__label">
+
+                  <mat-tree [dataSource]="dataSourcetera" [treeControl]="treeControltera">
+                    <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                      <!-- {{node.name}} -->
+                      <mat-checkbox [checked]="node.value" (change)="serviciosTerapeuticosFun($event)"
+                        [value]="node.name">
+                        {{node.name}}
+                      </mat-checkbox>
+                    </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildTera">
+                      <div style="margin-left: -30px; width: 100%">
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                          <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControltera.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                          </mat-icon>
+                        </button>
+                        <span style="font-size: 18px">{{node.name}}
+                          <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                            ngbPopover="Son servicios que presta el asilo al adulto mayor para su bienestar y debe seleccionar cual desea ocupar."
+                            triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                            viewBox="0 0 50 50">
+                            <path
+                              d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                          </svg>
+                        </span>
+
+                      </div>
+                      <!-- There is inline padding applied to this div using styles.
+                               This padding value depends on the mat-icon-button width.  -->
+                      <div [class.example-tree-invisible]="!treeControltera.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                      </div>
+                    </mat-nested-tree-node>
+
+                  </mat-tree>
+                </div>
+                <div class="row">
+                  <div class="info__asilo__expand__content"></div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col info__asilo__expand">
+                <!-- <div class="info__asilo__label">
+                    <label class="form-label label__padding">Servicios de comodidad
+                      
+                    </label>
+                  </div> -->
+                <div class="row info__asilo__label">
+
+                  <mat-tree [dataSource]="dataSourcecomodidad" [treeControl]="treeControlcomodidad">
+                    <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                      <!-- {{node.name}} -->
+                      <mat-checkbox [checked]="node.value" (change)="serviciosInstlaciones($event)" [value]="node.name">
+                        {{node.name}}
+                      </mat-checkbox>
+                    </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildComo">
+                      <div style="margin-left: -30px; width: 100%">
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                          <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControlcomodidad.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                          </mat-icon>
+                        </button>
+                        <span style="font-size: 18px">{{node.name}}
+                          <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                            ngbPopover="Son servicios que presta el asilo al adulto mayor para su bienestar y debe seleccionar cual desea ocupar."
+                            triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                            viewBox="0 0 50 50">
+                            <path
+                              d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                          </svg>
+                        </span>
+
+                      </div>
+                      <!-- There is inline padding applied to this div using styles.
+                               This padding value depends on the mat-icon-button width.  -->
+                      <div [class.example-tree-invisible]="!treeControlcomodidad.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                      </div>
+                    </mat-nested-tree-node>
+
+                  </mat-tree>
+                </div>
+                <div class="row">
+                  <div class="info__asilo__expand__content"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-5">
+              <div class="col info__asilo__expand">
+                <!-- <div class="info__asilo__label">
+                    <label class="form-label label__padding">Servicios de comodidad
+                      
+                    </label>
+                  </div> -->
+
+                <div class="row info__asilo__label">
+
+                  <mat-tree [dataSource]="dataSourceAdi" [treeControl]="treeControlAdi">
+                    <mat-tree-node style="margin-left: 30px" *matTreeNodeDef="let node" matTreeNodeToggle>
+                      <!-- {{node.name}} -->
+                      <mat-checkbox [checked]="node.value" (change)="serviciosadicionales($event)" [value]="node.name">
+                        {{node.name}}
+                      </mat-checkbox>
+                    </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChildAdi">
+                      <div style="margin-left: -30px; width: 100%">
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                          <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControlAdi.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                          </mat-icon>
+                        </button>
+                        <span style="font-size: 18px">{{node.name}}
+                          <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                            ngbPopover="Son servicios que presta el asilo al adulto mayor para su bienestar y debe seleccionar cual desea ocupar."
+                            triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                            viewBox="0 0 50 50">
+                            <path
+                              d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                          </svg>
+                        </span>
+
+                      </div>
+                      <!-- There is inline padding applied to this div using styles.
+                               This padding value depends on the mat-icon-button width.  -->
+                      <div [class.example-tree-invisible]="!treeControlAdi.isExpanded(node)" role="group">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                      </div>
+                    </mat-nested-tree-node>
+
+                  </mat-tree>
+                </div>
+                <div class="row">
+                  <div class="info__asilo__expand__content"></div>
+                </div>
+              </div>
+            </div>
+            <!-- boton -->
+            <div class="mt-3 d-flex justify-content-center">
+              <!-- <button mat-button matStepperPrevious>Atras</button>
+                <button mat-button matStepperNext>Siguiente</button> -->
+              <button mat-raised-button class="btn btn-primary"  (click)="actualizarServicios()">Actualizar</button>
+              <button mat-raised-button class="btn btn-success" style="margin: 7px;" matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <div>
+          <!-- <button mat-button matStepperPrevious>Back</button> -->
+        </div>
+        <mat-step [stepControl]="thirdFormGroup">
+          <form [formGroup]="thirdFormGroup" novalidate>
+            <ng-template matStepLabel>Imagen del Asilo </ng-template>
+
+
+            <div class="mb-3">
+              <h5>Esta sección te permite seleccioar la imagen del asilo</h5>
+
+              <label class="form-label">Imagen del Asilo
+                <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo" ngbPopover="ingrese la foto del asilo"
+                  triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                  viewBox="0 0 50 50">
+                  <path
+                    d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                </svg>
+              </label>
+              <div>
+                <img [src]="mostrarImagen" *ngIf="mostrarImagen != ''" width="150" loading="lazy">
+              </div>
+              <br>
+              <input type="file" accept="image/png, image/jpg, image/jpeg" (change)="cambioImagen($event)"
+                formControlName="img">
+              <div class="row" *ngIf="errorImg">
+                <span class="text-danger">
+                  La imagen es un campo obligatorio, por favor seleccionar una.
+                </span>
+              </div>
+            </div>
+
+
+            <button type="button" (click)="onSubmit()" class="btn btn-primary">Actualizar</button>
+            <button mat-raised-button class="btn btn-success" style="margin: 7px;" matStepperNext>Siguiente</button>
+          </form>
+
+
+
+        </mat-step>
+
+        <mat-step [stepControl]="cantidadPersonalFormGroup" *ngIf="data?.alimentacion && data?.alimentacion != ''">
+          <h5>Esta sección te permite seleccionar la cantidad de personal hay en cada área de trabajo</h5>
+          <form [formGroup]="cantidadPersonalFormGroup" novalidate>
+            <ng-template matStepLabel>Cantidad de personal </ng-template>
+
+            <div class="row row-cols-3">
+              <div class="col" *ngIf="dataCantidadPersonal.alimentacion !== 'no'">
+                <label>
+                  Personal Alimentación
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    [ngbPopover]="(dataCantidadPersonal.alimentacion !== 'no' || dataCantidadPersonal.aimentacion !== '') ? 'Debe indicar la cantidad de personal que dispone para el servicio de alimentacion' : 'No puede indicar la cantidad de personal de alimentacion ya que usted selecciono '+ dataCantidadPersonal.aliemtacion"
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="cantidadAlimentacion"
+                  placeholder="0">
+                <div class="row" *ngIf="errorCantidadAlimentacion">
+                  <span class="text-danger">
+                    El campo servicios alimentación es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorCalimentacionMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorCalimentacionPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+              <div class="col" *ngIf="dataCantidadPersonal.transporte !== 'No'">
+                <label>
+                  Personal Transporte
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para el servicio de transporte"
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="cantidadTransporte" placeholder="0">
+                <div class="row" *ngIf="errorCantidadTransporte">
+                  <span class="text-danger">
+                    El campo servicios transporte es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorCTransporteMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorCTransportePattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+              <div class="col" *ngIf="dataCantidadPersonal.aseo !== 'no'">
+                <label>Cantidad de personal Aseo
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para el servicio de aseo"
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="cantidadaseo" placeholder="0">
+                <div class="row" *ngIf="errorCantidadAseo">
+                  <span class="text-danger">
+                    El campo servicios aseo es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcantidadaseoMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcantidadaseoPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+              <div class="col" *ngIf="serviciosMedicosBool">
+                <label>Cantidad de personal Control médico
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para el servicio de control medico"
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="cmedico" placeholder="0">
+                <div class="row" *ngIf="errorCantidadMedico">
+                  <span class="text-danger">
+                    El campo servicios medicos es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcmedicoMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcmedicoPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+              <div class="col" *ngIf="serviciosTerapeuticosBool">
+                <label>Cantidad de personal Servicios terapeuticos
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para los servicios terapeuticos"
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="ctera" placeholder="0">
+                <div class="row" *ngIf="errorCantidadTera">
+                  <span class="text-danger">
+                    El campo servicios terapeuticos es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcteraMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcteraPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+              <div class="col" *ngIf="serviciosSanitariosBool">
+                <label>Cantidad de personal Servicios Sanitarios
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para los servicios sanitarios"
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="csanitario" placeholder="0">
+                <div class="row" *ngIf="errorCantidadSanitario">
+                  <span class="text-danger">
+                    El campo servicios sanitarios es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcsanitarioMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcsanitarioPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+
+              </div>
+              <div class="col" *ngIf="serviciosComodidadBool">
+                <label>Cantidad de personal Servicios de comodidad
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para los servicios de comodidad que son los espacios disponibles."
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="ccomodidad" placeholder="0">
+                <div class="row" *ngIf="errorCantidadComodidad">
+                  <span class="text-danger">
+                    El campo servicios comodidad es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorccomodidadMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorccomodidadPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+              <div class="col" *ngIf="serviciosAtencionBool">
+                <label>Cantidad de personal Servicios de atención
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para los servicios, servicios para el bienestar del adulto."
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="catencion" placeholder="0">
+                <div class="row" *ngIf="errorCantidadAtencion">
+                  <span class="text-danger">
+                    El campo servicios atención es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcatencionMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorcatencionPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+              <div class="col" *ngIf="serviciosAdicionalesBool">
+                <label>Cantidad de personal servicios complementarios
+                  <svg fill="#00ff55" placement="end" popoverClass="cambiar_fondo"
+                    ngbPopover="Debe indicar la cantidad de personal que dispone para los servicios complementarios, como peluqueria u otros que no estan contemplados en los sservicios principales."
+                    triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                    viewBox="0 0 50 50">
+                    <path
+                      d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                  </svg>
+                </label>
+                <input  type="number" class="form-control" formControlName="ccomplementarios" placeholder="0">
+                <div class="row" *ngIf="errorCantidadAdicionales">
+                  <span class="text-danger">
+                    El campo servicios complementarios es obligatorio y debe ser mayor a 0
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorccomplementariosMax">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorccomplementariosPattern">
+                  <span class="text-danger">
+                    Debe ingresar un número del 1 al 10.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+              <button type="button" (click)="cantidadPersonal()" class="btn btn-primary">Actualizar</button>
+            </div>
+
+          </form>
+
+
+
+        </mat-step>
+
+      </mat-stepper>
+    </div>
+  </div>
+</mat-drawer-container>

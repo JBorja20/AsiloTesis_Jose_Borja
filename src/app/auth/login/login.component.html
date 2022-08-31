@@ -1,0 +1,84 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-center">Iniciar Sesión</h1>
+                    <form [formGroup]='loginForm' (ngSubmit)="onLogin()">
+                        <div class="form-group">
+                            <label for="email">Correo</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+
+                                    <i class=" pi pi-envelope"></i>
+                                </span>
+                                <input type="email" class="form-control" formControlName="email">
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="errorCorreo">
+                            <div class="text-danger">
+                                El correo es obligatorio
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="errorPattern">
+                            <div class="text-danger">
+                                El correo no es valido no tiene el siguiente patron nombre@dominio.com
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+ 
+                                <div class="form-group">
+                                    <label for="password">Contraseña </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="pi pi-lock"></i>
+                                        </span>
+                                        <input [type]="verpass ? 'password': 'text'" class="form-control"formControlName="password">
+                                        <span *ngIf="verpass" style="cursor:pointer" class="input-group-text" (click)="verContrasenia()">
+                                            <i class="pi pi-eye"></i>
+                                        </span>
+                                        <span *ngIf="!verpass" class="input-group-text" style="cursor:pointer" (click)="verContrasenia()">
+                                            <i class="pi pi-eye-slash"></i>
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <div  style="display:flex; justify-content: center ;width: 9% ;margin-top: -31.4px;">
+                                       
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="row" *ngIf="errorPass">
+                            <div class="text-danger">
+                                La contraseña es obligatorio
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="errorPassMin">
+                            <div class="text-danger">
+                                La contraseña debe ser tener al menos 6 caracteres para ser valido.
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-end mt-0">
+                            <a routerLink="/olvido-pass">Olvido su contraseña?</a>
+                        </div>
+                        <div class="d-grid gap-1">
+                            <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary">Iniciar</button>
+
+                        </div>
+
+                    </form>
+                    <div class="form-group mt-3">
+                        <p>create una cuenta ? <a routerLink="/register">Registrate</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

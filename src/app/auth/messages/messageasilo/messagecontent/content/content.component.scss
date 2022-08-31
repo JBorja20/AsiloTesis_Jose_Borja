@@ -1,0 +1,72 @@
+.message-input{
+    background: none;
+    border: none;
+    outline: none !important;
+    resize: none;
+    font-size: 15px;
+    height: 35px;
+    scrollbar-color: rgb(173, 172, 172) white;
+    scrollbar-width: thin;
+    margin-top: 2px;
+    width: 100%;
+    color: #444;
+    margin-bottom: 0;
+}
+
+textarea::placeholder{
+    padding-top: 3px;
+}
+
+.message-input::-webkit-scrollbar{
+    width: 8px;
+  }
+  
+  .message-input::-webkit-scrollbar-track{
+    background: white;
+  }
+  
+  .message-input::-webkit-scrollbar-thumb{
+    background-color: rgb(173, 172, 172);
+    border-radius: 20px;
+    border: 3px solid rgb(173, 172, 172);;
+  }
+  .message-submit {
+    // position: absolute;
+    z-index: 1;
+    color: #4A90E2;
+    border: none;
+   /* background: #c29d5f;*/
+    background: #fff;
+    // font-size: px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 5px;
+    outline: none!important;
+    transition: background .2s ease;
+    cursor:pointer;
+    &:hover {
+      background: #fff;
+      color: #333;
+    }
+  }
+
+  #msj-id{
+    scrollbar-color: rgb(173, 172, 172) #fafafa;
+    scrollbar-width: thin;
+  }
+
+  #msj-id::-webkit-scrollbar{
+    width: 8px;
+  }
+  
+  #msj-id::-webkit-scrollbar-track{
+    height: 98%;
+    background: #fafafa;
+  }
+  
+  #msj-id::-webkit-scrollbar-thumb{
+    background-color: rgb(173, 172, 172);
+    border-radius: 20px;
+    border: 3px solid rgb(173, 172, 172);;
+  }

@@ -1,0 +1,32 @@
+
+<div class="row">
+    <div class="col">
+        <h3>Ingrese su contrasenia para validar la informacion</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label for="motivo">Contraseña actual</label>
+        <div class="form-floating mb-3">
+            <div class="input-group">
+                <input class="form-control" [type]="!verpass ? 'password': 'text'" id="motivo" [ngModel]="contrasenia" (ngModelChange)="cambioPass($event)" placeholder="contraseña actual">
+                <span *ngIf="verpass" style="cursor:pointer" class="input-group-text" (click)="verContrasenia()">
+                    <i class="pi pi-eye"></i>
+                </span>
+                <span *ngIf="!verpass" style="cursor:pointer" class="input-group-text" (click)="verContrasenia()">
+                    <i class="pi pi-eye-slash"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-grid gap-1 d-md-flex justify-content-md-center">
+    <button type="button" class="btn btn-success" (click)="verificar()">Guardar</button>
+    <button type="button" class="btn btn-warning"(click)="cerrar()" >Cancelar</button>
+    <!-- <div class="col"></div>
+    <div class="col-md-8">
+    </div>
+    <div class="col"></div> -->
+</div>
+

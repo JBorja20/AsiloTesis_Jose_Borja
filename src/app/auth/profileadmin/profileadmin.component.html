@@ -1,0 +1,243 @@
+
+<mat-drawer-container class="example-container" width="700" height="100vh"  style="height: 100%; width: 100%;" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+
+    <div class="d-flex flex-column flex-shrink-0 p-5 text-white bg-dark" style="width: 100%; height: 100vh;">
+      <div class="row" style="display: block;">
+        <div class="col text-center">
+ 
+          <p-avatar [image]="data.foto != '' ? data.foto : '/assets/img/no-photo.png'" alt="no photo " shape="circle" size="xlarge"></p-avatar>
+        </div>
+      </div>
+      <div class="row">
+        <div class="d-flex justify-content-center ">
+          <span style="font-size:18px; display: block;">{{nombre}}</span>
+          
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+          <small style="font-size:13px; margin-top: -7px">Administrador</small>
+        </div>
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        
+        <li class="nav-item mt-3">
+          <a routerLink="/gerente/profile" class="nav-link active" aria-current="page">
+            <i class="pi pi-user me-3"></i>
+            Perfil
+          </a>
+        </li>
+        
+        
+        <li class="nav-item mt-3">
+          <a routerLink="/gerente/show" class="nav-link active" aria-current="page">
+            <i class="pi pi-book me-3"></i>
+            Asilos
+          </a>
+        </li>
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          <p-avatar [image]="data.foto != '' ? data.foto : '/assets/img/no-photo.png'" alt="no photo " shape="circle" class="ps-3"></p-avatar>
+          <strong class="ps-2">Cerrar sesión</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+
+          <li (click)="cerrar()"><a class="dropdown-item btn">Cerrar sesión</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <!--button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </!--button-->
+    <mat-toolbar color="primary">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+      </button>
+
+    </mat-toolbar>
+
+  </div>
+  <!-- ======================================================================================================= -->
+  <!-- 
+
+    <app-elnombrequelepongas [data]="" [dataUser] ="" [idDoc]=""></app-elnombrequelepongas>
+   -->
+
+   <div class="row mt-5" style="display: flex; justify-content: center; margin:auto; height: auto; width: 95%;  border: 1px solid #CCC; border-radius: 5px; width:85%;  box-shadow: 0 0 10px rgb(163, 163, 163);">
+    <div class="row bg-info text-white" style="border: 1px solid #CCC; border-radius: 5px; width:95%;  height: 55px; box-shadow: 0 0 10px rgb(163, 163, 163); margin-top:-25px;">
+      <h4 style="line-height: 51px; overflow-wrap: break-word;">Este te módulo permite actualizar los datos del perfil Administrador</h4>
+    </div>
+    <div class="col-md-4 container " style="border-right: 1px solid rgb(223, 222, 222); display: flex; justify-content: center;">
+      
+      <div class="row mb-4" style="display: flex; margin-top: 25%; justify-content: center; border: 1px solid #CCC; border-radius: 5px; width:85%;  box-shadow: 0 0 10px rgb(163, 163, 163);">
+        
+          <div class="col-md-8" style="display:flex; justify-content: center;  margin-top:-50px">
+         
+              <img [src]="data.foto != '' ? data.foto : '/assets/img/no-photo.png'" alt="no photo" style="height:  150px; width: 150px;border-radius: 150%; border: 1px solid #ccc; box-shadow: 0 0 10px rgb(163, 163, 163); "/>
+          </div>
+
+
+          <div  style="height: 25px; margin-top: -4px">
+            <div class="col" style="display: flex; justify-content: center;color: #999999 ">
+               <span>Administrador</span>
+            </div>
+          </div>
+        <div class="row mb-0" style="height: 25px; margin-top: -30px">
+            <div class="col" style="display: flex; justify-content: center; ">
+               <b>{{dataUser.displayName}}</b>  
+            </div>
+        </div>
+        <div class="row mb-0" style="height: 25px; margin-top: -30px">
+            <div class="col" style="display: flex; justify-content: center; color: #999999">
+              {{dataUser.email}}
+            </div>
+        </div>
+           
+        <div class="row">
+          <div class="col text-center"  style="border-top: 1px solid #e4e3e3">
+            <span style="display:block; color: #999"> actualizar foto</span>
+            
+            <svg type="button" xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 50 50" id="img" (click)="cambiarImg($event)">
+                <path d="M11.8 34.15H36.25L28.9 24.35L22.3 32.9L17.65 26.55ZM9 42Q7.8 42 6.9 41.1Q6 40.2 6 39V9Q6 7.8 6.9 6.9Q7.8 6 9 6H39Q40.2 6 41.1 6.9Q42 7.8 42 9V39Q42 40.2 41.1 41.1Q40.2 42 39 42ZM9 39H39Q39 39 39 39Q39 39 39 39V9Q39 9 39 9Q39 9 39 9H9Q9 9 9 9Q9 9 9 9V39Q9 39 9 39Q9 39 9 39ZM9 9Q9 9 9 9Q9 9 9 9V39Q9 39 9 39Q9 39 9 39Q9 39 9 39Q9 39 9 39V9Q9 9 9 9Q9 9 9 9Z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="col mt-5" style="margin-left: 12%">
+          
+        <form [formGroup]="profileAdmin" (ngSubmit)="cambiarcor()">
+
+          <div class="row" style="display: flex; justify-content: center; width: 75%;">
+              <div class="col">
+                  <span class="form-label">Nombre: *</span>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-user"></i>
+                    </span>
+                    <input class="form-control" type="text" formControlName="nombre" >
+                  </div>
+              </div>
+              <div class="row" *ngIf="errorNombre">
+                <span class="text-danger">
+                  El nombre es un campo obligatorio.
+                </span>
+              </div>
+              <div class="row" *ngIf="errorNombreMin">
+                <span class="text-danger">
+                  El nombre debe tener al menos 2 caracteres.
+                </span>
+              </div>
+              <div class="row" *ngIf="errorNombrePattern">
+                <span class="text-danger">
+                  El campo nombre no puede contener numeros y caracteres especiales.
+                </span>
+              </div>
+              <div class="row" *ngIf="errorNombreMax">
+                <span class="text-danger">
+                    El campo nombre debe tener un máximo de 20 caracteres.
+                </span>
+            </div>
+          </div>
+          
+          <div class="row" style="width: 75%">
+              <div class="col">
+                  <span class="form-label">Telefono:</span>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-phone"></i>
+                    </span>
+                    <input type="text" class="form-control" formControlName="telefono">
+                  </div>
+                  <div class="row" *ngIf="errorPhone">
+                    <span class="text-danger">El numero de telefono debe estar formado solo por números y no se permiten letras y caracteres especiales.</span>
+                  </div>
+              </div>
+          </div>
+          <div class="row" style="width: 75%">
+              <div class="col">
+                  <span class="form-label">Dirección:</span>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-map"></i>
+                    </span>
+                    <input type="text" class="form-control" formControlName="direccion">
+                  </div>
+                  <div class="row" *ngIf="errorDireccionMax">
+                    <span class="text-danger">
+                      El campo direccion no debe sobrepasar los 50 caracteres.
+                    </span>
+                  </div>
+                  
+              </div>
+          </div>
+          <div class="row" style="width: 75%">
+              <div class="col">
+                  <span class="form-label">Correo:</span>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-envelope"></i>
+                    </span>
+                    <input type="text" class="form-control" formControlName="email" (change)="cambioCorreo($event.target)">
+                  </div>
+              </div>
+              <div class="row" *ngIf="errorCorreo">
+                <span class="text-danger">
+                  El correo es invalido debe tener e siguiente patron nombre@dominio.com
+                </span>
+              </div>
+              <div class="row" *ngIf="errorCorreoVacio && errorCorreo">
+                <span class="text-danger">
+                  Complete el correo electronico si desea cambiar, caso contrario deje en blanco para no cambiarlo.
+                </span>
+              </div>
+              
+          </div>
+          <div class="row" style="width: 75%">
+              <div class="col">
+                  <span class="form-label"> Contraseña:</span>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="pi pi-lock"></i>
+                    </span>
+                    <input [type]="verpass ? 'text': 'password'" name="pass" class="form-control"  formControlName="passw"  placeholder="•••••••••••••••" (change)="cambioPass($event.target)">
+                    <!-- <input [type]="verpass ? 'password': 'text'" class="form-control" formControlName="password"> -->
+                    <span *ngIf="!verpass" style="cursor:pointer" class="input-group-text" (click)="verContrasenia()">
+                        <i class="pi pi-eye"></i>
+                    </span>
+                    <span *ngIf="verpass" style="cursor:pointer" class="input-group-text" (click)="verContrasenia()">
+                        <i class="pi pi-eye-slash"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="row" *ngIf="errorPassw">
+                  <span class="text-danger">
+                    El campo debe tener al menos 6 caracteres para ser valida.
+                  </span>
+                </div>
+                <div class="row" *ngIf="errorPasswVacio">
+                  <span class="text-danger">
+                    Complete la contraseña si desea cambiar, caso contrario deje en blanco para no modificarlo.
+                  </span>
+                </div>
+          </div>
+          <div class="row" >
+            <div class="col mb-4 mt-3" style="width: 25%; margin-left: 28%"> 
+
+              <button class="btn btn-success" [disabled]="profileAdmin.invalid" type="submit">Actualizar perfil</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+</mat-drawer-container>
+
+

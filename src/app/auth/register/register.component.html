@@ -1,0 +1,128 @@
+<app-navbar></app-navbar> 
+<div class="row">
+    <div class="col-md-6 mx-auto mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center">REGISTRO</h1>
+                <form   [formGroup]='registerForm' (ngSubmit)="onRegister()" >
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="pi pi-user"></i>
+                            </span>
+                            <input type="nombre" class="form-control" formControlName="nombre" required>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorNombre">
+                        <span class="text-danger">El nombre es campo obligatorio.</span>   
+                    </div>
+                    <div class="row" *ngIf="errorNombreMin">
+                        <span class="text-danger">El nombre debe tener al menos dos caracteres.</span>   
+                    </div>
+                    <div class="row" *ngIf="errorNombrePattern">
+                        <span class="text-danger">
+                            El campo nombre no puede contener numeros y caracteres especiales.
+                        </span>
+                    </div>
+                    <div class="row" *ngIf="errorNombreMax">
+                        <span class="text-danger">
+                            El campo nombre debe tener un máximo de 20 caracteres.
+                        </span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="pi pi-map"></i>
+                            </span>
+                            <input type="direccion" class="form-control " formControlName="direccion" required>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorDireccion">
+                        <span class="text-danger">La dirección es campo obligatorio.</span>   
+                    </div>
+                    <div class="row" *ngIf="errorDireccionMin">
+                        <span class="text-danger">La dirección es invalida</span>   
+                    </div>
+                    <div class="row" *ngIf="errorDireccionMax">
+                        <span class="text-danger">
+                          El campo direccion no debe sobrepasar los 50 caracteres.
+                        </span>
+                      </div>
+                    <div class="form-group">
+                        <label for="email">Correo</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="pi pi-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" formControlName="email" required>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorCorreo">
+                        <span class="text-danger">El correo es campo obligatorio.</span>   
+                    </div>
+                    <div class="row" *ngIf="errorCorreoPattern">
+                        <span class="text-danger">El correo es invalido no tiene el siguiente patron nombre@dominio.com</span>   
+                    </div>
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="form-group">
+                                <label for="password">Contraseña </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="pi pi-lock"></span>
+                                    </span>
+                                    <input [type]="verpass ? 'password': 'text'" class="form-control" formControlName="password">
+                                    <span *ngIf="!verpass" style="cursor:pointer" class="input-group-text" (click)="verContrasenia()">
+                                        <i class="pi pi-eye"></i>
+                                    </span>
+                                    <span *ngIf="verpass" style="cursor:pointer" class="input-group-text" (click)="verContrasenia()">
+                                        <i class="pi pi-eye-slash"></i>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <!-- <div class="d-flex justify-content-end">
+
+                                <div  style="display:flex; justify-content: center ;width: 9% ;margin-top: -31.4px;">
+                                    <svg *ngIf="verpass" xmlns="http://www.w3.org/2000/svg" (click)="verContrasenia()"
+                                        style="cursor:pointer" height="30" width="30" viewBox="0 0 50 50">
+                                        <path
+                                            d="M31.45 27.05 29.25 24.85Q30.55 21.3 27.9 18.95Q25.25 16.6 22.15 17.75L19.95 15.55Q20.8 15 21.85 14.75Q22.9 14.5 24 14.5Q27.55 14.5 30.025 16.975Q32.5 19.45 32.5 23Q32.5 24.1 32.225 25.175Q31.95 26.25 31.45 27.05ZM37.9 33.5 35.9 31.5Q38.35 29.7 40.175 27.475Q42 25.25 42.85 23Q40.35 17.45 35.35 14.225Q30.35 11 24.5 11Q22.4 11 20.2 11.4Q18 11.8 16.75 12.35L14.45 10Q16.2 9.2 18.925 8.6Q21.65 8 24.25 8Q31.4 8 37.325 12.075Q43.25 16.15 46 23Q44.7 26.2 42.65 28.85Q40.6 31.5 37.9 33.5ZM40.8 44.8 32.4 36.55Q30.65 37.25 28.45 37.625Q26.25 38 24 38Q16.7 38 10.75 33.925Q4.8 29.85 2 23Q3 20.4 4.775 17.925Q6.55 15.45 9.1 13.2L2.8 6.9L4.9 4.75L42.75 42.6ZM11.15 15.3Q9.3 16.65 7.575 18.85Q5.85 21.05 5.1 23Q7.65 28.55 12.775 31.775Q17.9 35 24.4 35Q26.05 35 27.65 34.8Q29.25 34.6 30.05 34.2L26.85 31Q26.3 31.25 25.5 31.375Q24.7 31.5 24 31.5Q20.5 31.5 18 29.05Q15.5 26.6 15.5 23Q15.5 22.25 15.625 21.5Q15.75 20.75 16 20.15ZM26.4 22.4Q26.4 22.4 26.4 22.4Q26.4 22.4 26.4 22.4Q26.4 22.4 26.4 22.4Q26.4 22.4 26.4 22.4Q26.4 22.4 26.4 22.4Q26.4 22.4 26.4 22.4ZM20.6 25.3Q20.6 25.3 20.6 25.3Q20.6 25.3 20.6 25.3Q20.6 25.3 20.6 25.3Q20.6 25.3 20.6 25.3Q20.6 25.3 20.6 25.3Q20.6 25.3 20.6 25.3Z" />
+                                    </svg>
+                                    <svg *ngIf="!verpass" xmlns="http://www.w3.org/2000/svg" (click)="verContrasenia()"
+                                        style="cursor:pointer" height="30" width="30" viewBox="0 0 50 50">
+                                        <path
+                                            d="M24 31.5Q27.55 31.5 30.025 29.025Q32.5 26.55 32.5 23Q32.5 19.45 30.025 16.975Q27.55 14.5 24 14.5Q20.45 14.5 17.975 16.975Q15.5 19.45 15.5 23Q15.5 26.55 17.975 29.025Q20.45 31.5 24 31.5ZM24 28.6Q21.65 28.6 20.025 26.975Q18.4 25.35 18.4 23Q18.4 20.65 20.025 19.025Q21.65 17.4 24 17.4Q26.35 17.4 27.975 19.025Q29.6 20.65 29.6 23Q29.6 25.35 27.975 26.975Q26.35 28.6 24 28.6ZM24 38Q16.7 38 10.8 33.85Q4.9 29.7 2 23Q4.9 16.3 10.8 12.15Q16.7 8 24 8Q31.3 8 37.2 12.15Q43.1 16.3 46 23Q43.1 29.7 37.2 33.85Q31.3 38 24 38ZM24 23Q24 23 24 23Q24 23 24 23Q24 23 24 23Q24 23 24 23Q24 23 24 23Q24 23 24 23Q24 23 24 23Q24 23 24 23ZM24 35Q30.05 35 35.125 31.725Q40.2 28.45 42.85 23Q40.2 17.55 35.125 14.275Q30.05 11 24 11Q17.95 11 12.875 14.275Q7.8 17.55 5.1 23Q7.8 28.45 12.875 31.725Q17.95 35 24 35Z" />
+                                    </svg>
+                                    
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorPassword">
+                        <div class="text-danger">
+                            La contraseña es campo obligatorio
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorPasswordMin">
+                        <div class="text-danger">
+                            La contraseña debe tener al menos 6 caracteres para ser valido.
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-grid gap-1">
+                        <button class="btn btn-primary" type="submit">Registrate</button>
+                    </div>
+                    
+                </form>
+                <div class="form-group mt-3">
+                    <p>tu tienes una cuenta ? <a routerLink="/login">Iniciar Sesión</a></p>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
