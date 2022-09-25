@@ -9,7 +9,11 @@ Trabajo Final Previa a la btención del Título Profecional
 
    
 ## Documentacion 📙
+<<<<<<< HEAD
 - Informe Técnico ["Descargar"]( https://drive.google.com/file/d/1FqdDFqOFH-h3lHVoqQdKxT1vQ5WiX0vd/view?usp=sharing)
+=======
+- Informe Técnico ["Descargar"](https://drive.google.com/file/d/1LusA7vBg03r1zypxXDK6tk_4GVYO-k6U/view?usp=sharing)
+>>>>>>> 1ccd82b (correciones de tesis)
 
 - FA-234  ["Descargar"](https://drive.google.com/file/d/1HmVoXfFF6DeqT2ynNofoFmFCH59sbjw_/view?usp=sharing)
 
@@ -21,4 +25,7 @@ Trabajo Final Previa a la btención del Título Profecional
 
 ![image](https://user-images.githubusercontent.com/104482045/187319854-ce2ebd99-e8c7-4d7e-af29-926137d72a63.png)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ccd82b (correciones de tesis)

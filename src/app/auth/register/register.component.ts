@@ -54,11 +54,6 @@ export class RegisterComponent implements OnInit {
      this.authSvc.register(email.trim(), password.trim())
      .then((user) =>{
       if(user){
-        //  this.enviarcorreo()
-        //  .then((ok) =>{
-        //   
-          
-
            
            Swal.fire({
             title: 'Validando Campos...',
@@ -96,10 +91,11 @@ export class RegisterComponent implements OnInit {
             
               if(user && respFirebase.id.length > 2){
                 // 
+                // console.log('emtra aqui');
                 Swal.close();
                 this.authSvc.guardarCookie('asilos', user.user.uid);
       
-                this.router.navigateByUrl('asilo/regis-asi');
+                this.router.navigateByUrl('/asilo/regis-asi', { replaceUrl: true, skipLocationChange: false });
                 
               }else{
                 

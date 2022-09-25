@@ -644,13 +644,24 @@ export class ProformaComponent implements OnInit {
       pdf.add(new Table([
         [
           {
+<<<<<<< HEAD
             text: `${ this.servicioMedAux[i].name }`, 
+=======
+            text: ''
+          },
+          {
+            text: `     • ${ this.servicioMedAux[i].name }`, 
+>>>>>>> 1ccd82b (correciones de tesis)
           },
           {
             text: '$ ' + this.servicioMedAux[i].value,
           }
         ]
+<<<<<<< HEAD
       ]).layout('noBorders').widths(['70%', '30%']).end);
+=======
+      ]).layout('noBorders').widths(['2%','68%', '30%']).end);
+>>>>>>> 1ccd82b (correciones de tesis)
     }
     pdf.add(new Table([
       [
@@ -667,13 +678,24 @@ export class ProformaComponent implements OnInit {
       pdf.add(new Table([
         [
           {
+<<<<<<< HEAD
             text: `${ this.servicioAdiAux[i].name }`, 
+=======
+            text: ''
+          },
+          {
+            text: `     • ${ this.servicioAdiAux[i].name }`, 
+>>>>>>> 1ccd82b (correciones de tesis)
           },
           {
             text: `$ ${this.servicioAdiAux[i].value} `,
           }
         ]
+<<<<<<< HEAD
       ]).layout('noBorders').widths(['70%', '30%']).end);
+=======
+      ]).layout('noBorders').widths(['2%','68%', '30%']).end);
+>>>>>>> 1ccd82b (correciones de tesis)
     }
     
     pdf.add(new Txt('\n\n\n').end);
@@ -693,7 +715,11 @@ export class ProformaComponent implements OnInit {
           text: 'Valor total por hijo', 
         },
         {
+<<<<<<< HEAD
           text: '$ ' + this.suma/this.numhijos,
+=======
+          text: '$ ' + (this.suma/this.numhijos).toFixed(2),
+>>>>>>> 1ccd82b (correciones de tesis)
         }
       ]
     ]).layout('noBorders').widths(['70%', '30%']).end);
@@ -707,7 +733,11 @@ export class ProformaComponent implements OnInit {
 
     pdf.add(new Txt('\n\n').end);
 
+<<<<<<< HEAD
     pdf.add((await new Img('../../../assets/img/firma.png').relativePosition(350, 50).height('80').width('60').build()));
+=======
+    pdf.add((await new Img('../../../assets/img/firma.png').relativePosition(350, 65).height('80').width('60').build()));
+>>>>>>> 1ccd82b (correciones de tesis)
 
 
     pdf.add(new Table([

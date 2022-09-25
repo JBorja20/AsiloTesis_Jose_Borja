@@ -1,5 +1,4 @@
-<mat-drawer-container class="example-container" width="700" height="100vh" style="height: 100vh;" autosize
-  *ngIf="!rechazar">
+<mat-drawer-container class="example-container" width="700" height="100vh" style="height: 100vh;" autosize *ngIf="!rechazar">
   <mat-drawer #drawer class="example-sidenav" mode="side" [opened]="opened">
 
     <!--button (click)="showFiller = !showFiller" mat-raised-button>
@@ -9,12 +8,12 @@
       <div class="row" style="display: block;">
         <div class="col text-center">
 
-          <p-avatar [image]="(imagen != null || imagen != '') ? imagen : '/assets/img/no-photo.png'" alt="no photo " shape="circle"
+          <p-avatar [image]="dataImg.photoURL != null ? dataImg.photoURL : '/assets/img/no-photo.png'" alt="no photo " shape="circle"
             size="xlarge"></p-avatar>
         </div>
       </div>
       <div class="d-flex justify-content-center">
-        <span style="font-size:18px">{{nombre}}</span>
+        <span style="font-size:18px; display: block;">{{ dataImg?.displayName ? dataImg?.displayName : ''}}</span>
       </div>
       <div class="d-flex justify-content-center">
         <small style="font-size: 13px; " class="mt-1">Asilo</small>
@@ -49,14 +48,6 @@
             </span>
           </a>
         </li>
-        <li>
-          <a href="#" class="nav-link text-white">
-            <svg class="bi me-2" width="16" height="16">
-              <use xlink:href="#table" />
-            </svg>
-
-          </a>
-        </li>
 
 
       </ul>
@@ -64,7 +55,7 @@
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" role="button"
           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <p-avatar [image]="imagen != null ? imagen : 'assets/img/no-photo.png'" alt="no photo " shape="circle"
+          <p-avatar [image]="dataImg.photoURL != null ? dataImg.photoURL : '/assets/img/no-photo.png'" alt="no photo " shape="circle"
             class="ms-3"></p-avatar>
           <strong class="ps-2">Cerrar Sesion</strong>
         </a>
@@ -78,271 +69,265 @@
 
 
 
-  <div class="example-sidenav-content">
-    <mat-toolbar color="primary">
-      <button type="button" mat-button (click)="abrirSide(drawer)">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
-      </button>
-
-    </mat-toolbar>
+  <!-- <div class="example-sidenav-content"> -->
+    <div class="row example-sidenav-content" style="width: 100%;">
+      <mat-toolbar color="primary">
+        <button type="button" mat-button (click)="abrirSide(drawer)">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+        </button>
+      </mat-toolbar>
+  
+    </div>
     <br>
     <br>
-    <!---------------------------------------------------------------------------------->
-    <div class="" *ngIf="mostrarFormulario && !aprobado">
-      <div class="row mb-5 pb-5"
-        style="display: flex; justify-content: center; margin:auto; height: auto; width: 95%;  border: 1px solid #CCC; border-radius: 5px; width:85%;  box-shadow: 0 0 10px rgb(163, 163, 163);">
-        <div class="row bg-info text-white"
-          style="border: 1px solid #CCC; border-radius: 5px; width:95%;  height: 55px; box-shadow: 0 0 10px rgb(163, 163, 163); margin-top:-25px">
-          <h5 style="line-height: 51px;">Este módulo te permite solicitar la afiliación del asilo</h5>
+    
+    <div *ngIf="mostrarFormulario && !aprobado">
+      <div class="row mb-5 pb-5" style="display: flex; justify-content: center; margin:auto; height: auto; width: 95%;  border: 1px solid #CCC; border-radius: 5px; width:85%;  box-shadow: 0 0 10px rgb(163, 163, 163);">
+        <div class="row bg-info text-white" style="border: 1px solid #CCC; border-radius: 5px; width:95%;  height: 55px; box-shadow: 0 0 10px rgb(163, 163, 163); margin-top:-25px">
+          <h4 style="line-height: 51px;">Gestión de la información del asilo</h4>
         </div>
         <div class="col mt-5">
           <mat-stepper labelPosition="bottom" #stepper linear>
+                <mat-step [stepControl]="firstFormGroup">
+                  <form [formGroup]="firstFormGroup" class="container">
+                    <ng-template matStepLabel>Datos Principales</ng-template>
+                    <h5>Esta sección te permite agregar la información basica del asilo</h5>
+                    <div style="display:flex; justify-content: center; align-items: center;">
 
-            <mat-step [stepControl]="firstFormGroup">
-              <form [formGroup]="firstFormGroup" class="container">
-                <ng-template matStepLabel>Datos Principales</ng-template>
-                <h5>Esta sección te permite agregar la información basica del asilo</h5>
-                <div style="display:flex; justify-content: center; align-items: center;">
+                      <div style="width: 50%;">
+                        <div class="mb-3">
+                          <label class="form-label">Cédula/RUC:</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="pi pi-id-card"></i>
+                            </span>
+                            <input formControlName="cedula" type="text" (keyup)="verificarCedula($event)"
+                              class="form-control" required>
+                          </div>
+                          <div class="row" *ngIf="errorCedula">
+                            <span class="text-danger">
+                              La cédula es un campo obligatorio
+                            </span>
+                          </div>
+                          <div class="row" *ngIf="errorCedulaPattern">
+                            <span class="text-danger">
+                              La cedula tiene que tener a menos 10 o 13 digitos para ser valido y no debe tener letras ni
+                              espacios en blanco.
+                            </span>
+                          </div>
+                          <div class="row" *ngIf="verificarCedulaBool">
+                            <span class="text-danger">
+                              La cédula ingresada ya se encuentra registrada.
+                            </span>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Nombre: </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="pi pi-user"></i>
+                            </span>
+                            <input formControlName="name" type="text" class="form-control" required>
+                          </div>
+                          <div class="row" *ngIf="errorNombre">
+                            <span class="text-danger">
+                              El nombre es un campo obligatorio
+                            </span>
+                          </div>
+                          <div class="row" *ngIf="errorNamePattern">
+                            <span class="text-danger">
+                              Solo puede ingresar letras, no numeros ni caracteres.
+                            </span>
+                          </div>
+                          <div class="row" *ngIf="errorNombreMax">
+                            <span class="text-danger">
+                              El campo nombre debe tener un máximo de 20 caracteres.
+                            </span>
+                          </div>
+                        </div>
 
-                  <div style="width: 50%;">
-                    <div class="mb-3">
-                      <label class="form-label">Cédula/RUC:</label>
-                      <div class="input-group">
-                        <span class="input-group-text">
-                          <i class="pi pi-id-card"></i>
-                        </span>
-                        <input formControlName="cedula" type="text" (keyup)="verificarCedula($event)"
-                          class="form-control" required>
-                      </div>
-                      <div class="row" *ngIf="errorCedula">
-                        <span class="text-danger">
-                          La cédula es un campo obligatorio
-                        </span>
-                      </div>
-                      <div class="row" *ngIf="errorCedulaPattern">
-                        <span class="text-danger">
-                          La cedula tiene que tener a menos 10 o 13 digitos para ser valido y no debe tener letras ni
-                          espacios en blanco.
-                        </span>
-                      </div>
-                      <div class="row" *ngIf="verificarCedulaBool">
-                        <span class="text-danger">
-                          La cédula ingresada ya se encuentra registrada.
-                        </span>
+                        <div class="mb-3">
+                          <label class="form-label">Correo: </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="pi pi-map"></i>
+                            </span>
+                            <input formControlName="email" type="text" class="form-control" required>
+                          </div>
+
+                          <div class="row" *ngIf="errorEmail">
+                            <span class="text-danger">
+                              El correo es un campo obligatorio
+                            </span>
+                          </div>
+                          <div class="row" *ngIf="errorEmailPattern">
+                            <span class="text-danger">
+                              El correo no es valido no tiene el siguiente patron nombre@dominio.com
+                            </span>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Telefono:</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="pi pi-id-card"></i>
+                            </span>
+                            <input formControlName="fono" type="text" class="form-control" required>
+                          </div>
+                          <div class="row" *ngIf="errorFono">
+                            <span class="text-danger">
+                              El teléfono es un campo obligatorio
+                            </span>
+                          </div>
+                          <div class="row" *ngIf="errorFonoPattern">
+                            <span class="text-danger">
+                              El teléfono debe tener a menos 7 a 10 digitos y no debe tener caracteres alfabeticos ni
+                              espacios en blanco.
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="mb-3">
-                      <label class="form-label">Nombre: </label>
-                      <div class="input-group">
-                        <span class="input-group-text">
-                          <i class="pi pi-user"></i>
-                        </span>
-                        <input formControlName="name" type="text" class="form-control" required>
-                      </div>
-                      <div class="row" *ngIf="errorNombre">
-                        <span class="text-danger">
-                          El nombre es un campo obligatorio
-                        </span>
-                      </div>
-                      <div class="row" *ngIf="errorNamePattern">
-                        <span class="text-danger">
-                          Solo puede ingresar letras, no numeros ni caracteres.
-                        </span>
-                      </div>
-                      <div class="row" *ngIf="errorNombreMax">
-                        <span class="text-danger">
-                          El campo nombre debe tener un máximo de 20 caracteres.
-                        </span>
-                      </div>
+                    <div class="d-flex justify-content-center">
+                      <button mat-button (click)="siguientePestania()" [disabled]="verificarCedulaBool" matStepperNext
+                        type="button" class="btn btn-primary">Siguiente</button>
                     </div>
+                  </form>
+                </mat-step>
+                <!-- <ng-template *ngIf="!comprobarVacio"> -->
 
-                    <div class="mb-3">
-                      <label class="form-label">Correo: </label>
-                      <div class="input-group">
-                        <span class="input-group-text">
-                          <i class="pi pi-map"></i>
-                        </span>
-                        <input formControlName="email" type="text" class="form-control" required>
-                      </div>
-
-                      <div class="row" *ngIf="errorEmail">
-                        <span class="text-danger">
-                          El correo es un campo obligatorio
-                        </span>
-                      </div>
-                      <div class="row" *ngIf="errorEmailPattern">
-                        <span class="text-danger">
-                          El correo no es valido no tiene el siguiente patron nombre@dominio.com
-                        </span>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Telefono:</label>
-                      <div class="input-group">
-                        <span class="input-group-text">
-                          <i class="pi pi-id-card"></i>
-                        </span>
-                        <input formControlName="fono" type="text" class="form-control" required>
-                      </div>
-                      <div class="row" *ngIf="errorFono">
-                        <span class="text-danger">
-                          El teléfono es un campo obligatorio
-                        </span>
-                      </div>
-                      <div class="row" *ngIf="errorFonoPattern">
-                        <span class="text-danger">
-                          El teléfono debe tener a menos 7 a 10 digitos y no debe tener caracteres alfabeticos ni
-                          espacios en blanco.
-                        </span>
-                      </div>
-                    </div>
+                <mat-step [stepControl]="SecondFormGroup">
+                  <ng-template matStepLabel>Ubicación del establecimiento</ng-template>
+                  <div class="row">
+                    <h5>Esta sección te permite agregar la información basica del asilo</h5>
                   </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <button mat-button (click)="siguientePestania()" [disabled]="verificarCedulaBool" matStepperNext
-                    type="button" class="btn btn-primary">Siguiente</button>
-                </div>
-              </form>
-            </mat-step>
-            <!-- <ng-template *ngIf="!comprobarVacio"> -->
-
-            <mat-step [stepControl]="SecondFormGroup">
-              <ng-template matStepLabel>Ubicación del establecimiento</ng-template>
-              <div class="row">
-                <h5>Esta sección te permite agregar la información basica del asilo</h5>
-              </div>
-              <div class="row">
-                <p-tree [value]="dataTree" class="mb-2"></p-tree>
-              </div>
-              <form [formGroup]="SecondFormGroup" style="width: 100%">
-                <div class="row">
-                  <div class="col col-md-7 ">
-
-
-                    <div class="mb-3">
-                      <label class="form-label">Referencia: <i class="pi pi-map"></i></label>
-                      <p>{{direccion}}</p>
-                      <input formControlName="address" type="hidden"
-                      class="form-control auto-height" readonly>
-
-                    </div>
-                    <div class="row" *ngIf="loading">
-                      <span class="text-info">
-                        <i class="pi pi-spin pi-spinner"></i>
-                        Espere un momento estamos obteniendo la referencia.
-                      </span>
-                    </div>
-
+                  <div class="row">
+                    <p-tree [value]="dataTree" class="mb-2"></p-tree>
                   </div>
-                  <div class="col"c></div>
-                  <div class="col col-md-4" *ngIf="coords !== undefined">
+                  <form [formGroup]="SecondFormGroup" style="width: 100%">
                     <div class="row">
+                      <div class="col col-md-7 ">
 
-                      <p>Georeferenciacion: </p>
-                    </div>
-                    <div class="row">
-                      <div class="d-flex justify-content-start align-items-center">
-                        
-                        <p>( {{coords?.lat | number:'1.1-6'}}, {{coords?.lng | number:'1.1-6'}})</p>
+
+                        <div class="mb-3">
+                          <label class="form-label">Referencia: <i class="pi pi-map"></i></label>
+                          <p>{{direccion}}</p>
+                          <input formControlName="address" type="hidden"
+                          class="form-control auto-height" readonly>
+
+                        </div>
+                        <div class="row" *ngIf="loading">
+                          <span class="text-info">
+                            <i class="pi pi-spin pi-spinner"></i>
+                            Espere un momento estamos obteniendo la referencia.
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="col"c></div>
+                      <div class="col col-md-4" *ngIf="coords !== undefined">
+                        <div class="row">
+
+                          <p>Georeferenciacion: </p>
+                        </div>
+                        <div class="row">
+                          <div class="d-flex justify-content-start align-items-center">
+                            
+                            <p>( {{coords?.lat | number:'1.1-6'}}, {{coords?.lng | number:'1.1-6'}})</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </form>
-              
+                  </form>
+                  
 
-              <div class="row" *ngIf="coordsBoolean">
-                <span class="text-danger">
-                  Debe indicar la ubicación de su establecimiento en el mapa.
-                </span>
-              </div>
-              <div #mapaDiv id="mapa" class="mapa"></div>
-
-
-
-
-              <div class="d-flex justify-content-center align-items-center">
-                <button mat-button matStepperPrevious type="button" class="btn btn-primary me-2 mt-2">Atras</button>
-                <button mat-button [disabled]="coords == undefined" matStepperNext type="button"
-                  class="btn btn-primary ms-1 mt-2" (click)="siguienteUbicacion()">Siguiente</button>
-              </div>
-
-            </mat-step>
-
-            <!-- </ng-template> -->
-            <mat-step [stepControl]="fourthFormGroup">
-              <form [formGroup]="fourthFormGroup">
-                <ng-template matStepLabel>Imagenes</ng-template>
-
-
-                <div class="mb-3">
-                  <h5>Esta seccion te permite seleccionar una imagen y el documento del asilo</h5>
-                  <label class="form-label">Imagen del asilo
-                    <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55"
-                      ngbPopover="Debe seleccionar una foto del establecimiento, una vez seleccione se subira la imagen. "
-                      triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
-                      viewBox="0 0 50 50">
-                      <path
-                        d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
-                    </svg>
-                  </label>
-                  <div>
-                    <img [src]="mostrarImagen" *ngIf="mostrarImagen != ''" style="width: 150px;">
-                  </div>
-                  <br>
-                  <input type="file" formControlName="img" accept="image/png, image/jpg, image/jpeg"
-                    (change)="cambioImagen($event)">
-                  <div class="row" *ngIf="errorImg">
+                  <div class="row" *ngIf="coordsBoolean">
                     <span class="text-danger">
-                      La imagen es un campo obligatorio, por favor seleccionar una.
-                    </span>
-                    <span class="text-danger">
-                      cada imagen debe tener un tamaño de 840x600 para mejor visaulizacion
+                      Debe indicar la ubicación de su establecimiento en el mapa.
                     </span>
                   </div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Documento
-                    <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55"
-                      ngbPopover="Suba el documento otorgado por el sri para su funcionamiento en pdf, una vez seleccionado el documento se subira automaticamente."
-                      triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
-                      viewBox="0 0 50 50">
-                      <path
-                        d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
-                    </svg>
-                  </label>
-                  <br>
-                  <input type="file" accept="application/pdf" formControlName="doc" (change)="cambioImagenPdf($event)">
-                  <div class="row" *ngIf="errorDoc">
-                    <span class="text-danger">
-                      El documento es un campo obligatorio, por favor seleccionar uno.
-                    </span>
-                  </div>
-                </div>
+                  <div #mapaDiv id="mapa" class="mapa"></div>
 
-                <div class="row mt-3 ">
-                  <div class="col d-flex justify-content">
-                    <button mat-raised-button class="text-bg-warning me-2" matStepperPrevious type="button"
-                      class="btn btn-secondary" style="margin: 5px;">Atras</button>
-                    <button mat-raised-button class="text-bg-warning me-2" (click)="stepper.reset()" *ngIf="!rechazar"
-                      type="button" class="btn btn-warning" style="margin: 5px;">Borrar campos</button>
-                    <button type="button" (click)="onSubmit()" class="btn btn-primary"
-                      style="margin: 5px;">GUARDAR</button>
 
+
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <button mat-button matStepperPrevious type="button" class="btn btn-primary me-2 mt-2">Atras</button>
+                    <button mat-button [disabled]="coords == undefined" matStepperNext type="button"
+                      class="btn btn-primary ms-1 mt-2" (click)="siguienteUbicacion()">Siguiente</button>
                   </div>
-                </div>
-              </form>
-            </mat-step>
+
+                </mat-step>
+
+                <!-- </ng-template> -->
+                <mat-step [stepControl]="fourthFormGroup">
+                  <form [formGroup]="fourthFormGroup">
+                    <ng-template matStepLabel>Imagenes</ng-template>
+
+
+                    <div class="mb-3">
+                      <h5>Esta seccion te permite seleccionar una imagen y el documento del asilo</h5>
+                      <label class="form-label">Imagen del asilo
+                        <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55"
+                          ngbPopover="Debe seleccionar una foto del establecimiento, una vez seleccione se subira la imagen. "
+                          triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                          viewBox="0 0 50 50">
+                          <path
+                            d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                        </svg>
+                      </label>
+                      <div>
+                        <img [src]="mostrarImagen" *ngIf="mostrarImagen != ''" style="width: 150px;">
+                      </div>
+                      <br>
+                      <input type="file" formControlName="img" accept="image/png, image/jpg, image/jpeg"
+                        (change)="cambioImagen($event)">
+                      <div class="row" *ngIf="errorImg">
+                        <span class="text-danger">
+                          La imagen es un campo obligatorio, por favor seleccionar una.
+                        </span>
+                        <span class="text-danger">
+                          cada imagen debe tener un tamaño de 840x600 para mejor visaulizacion
+                        </span>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Documento
+                        <svg placement="end" popoverClass="cambiar_fondo" fill="#00ff55"
+                          ngbPopover="Suba el documento otorgado por el sri para su funcionamiento en pdf, una vez seleccionado el documento se subira automaticamente."
+                          triggers="mouseenter:mouseleave" xmlns="http://www.w3.org/2000/svg" height="30" width="30"
+                          viewBox="0 0 50 50">
+                          <path
+                            d="M25.75 44 25.25 38.5H23.25Q16.1 38.5 11.05 33.45Q6 28.4 6 21.25Q6 14.1 11.075 9.05Q16.15 4 23.35 4Q26.9 4 29.925 5.275Q32.95 6.55 35.2 8.85Q37.45 11.15 38.725 14.275Q40 17.4 40 21.1Q40 27.8 36.225 34.025Q32.45 40.25 25.75 44ZM23.35 32.85Q24.15 32.85 24.7 32.3Q25.25 31.75 25.25 30.95Q25.25 30.15 24.7 29.6Q24.15 29.05 23.35 29.05Q22.55 29.05 22 29.6Q21.45 30.15 21.45 30.95Q21.45 31.75 22 32.3Q22.55 32.85 23.35 32.85ZM22 26.05H24.5Q24.5 24.8 24.925 23.975Q25.35 23.15 26.7 21.8Q28.05 20.45 28.6 19.325Q29.15 18.2 29.15 16.9Q29.15 14.65 27.625 13.2Q26.1 11.75 23.55 11.75Q21.45 11.75 19.8 12.85Q18.15 13.95 17.35 15.85L19.65 16.8Q20.2 15.5 21.175 14.875Q22.15 14.25 23.4 14.25Q24.9 14.25 25.75 14.975Q26.6 15.7 26.6 16.9Q26.6 17.85 26.05 18.825Q25.5 19.8 24.1 21.25Q22.75 22.65 22.375 23.5Q22 24.35 22 26.05ZM28.25 35.5V38.6Q32.35 35.15 34.675 30.475Q37 25.8 37 21.1Q37 14.9 33.125 10.95Q29.25 7 23.35 7Q17.35 7 13.175 11.175Q9 15.35 9 21.25Q9 27.15 13.175 31.325Q17.35 35.5 23.25 35.5ZM23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Q23 22.8 23 22.8Z" />
+                        </svg>
+                      </label>
+                      <br>
+                      <input type="file" accept="application/pdf" formControlName="doc" (change)="cambioImagenPdf($event)">
+                      <div class="row" *ngIf="errorDoc">
+                        <span class="text-danger">
+                          El documento es un campo obligatorio, por favor seleccionar uno.
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="row mt-3 ">
+                      <div class="col d-flex justify-content">
+                        <button mat-raised-button class="text-bg-warning me-2" matStepperPrevious type="button"
+                          class="btn btn-secondary" style="margin: 5px;">Atras</button>
+                        <button mat-raised-button class="text-bg-warning me-2" (click)="stepper.reset()" *ngIf="!rechazar"
+                          type="button" class="btn btn-warning" style="margin: 5px;">Borrar campos</button>
+                        <button type="button" (click)="onSubmit()" class="btn btn-primary"
+                          style="margin: 5px;">GUARDAR</button>
+
+                      </div>
+                    </div>
+                  </form>
+                </mat-step>
 
           </mat-stepper>
         </div>
       </div>
-
-
     </div>
-
-
-
     <div class="container" *ngIf="confirmar">
       <div class="row">
         <div class="col"></div>
@@ -360,13 +345,7 @@
         </div>
         <div class="col"></div>
       </div>
-
     </div>
-
-    <!-- <div *ngIf="aprobado">
-      <app-regisall [registroAnterio]="registroAnterior" [idDoc]="idDoc" (llenado)="llenadoFormulario($event)">
-      </app-regisall>
-    </div> -->
     <div class="d-flex justify-content-center align-items-center border">
 
       <div *ngIf="aprobado">
@@ -381,31 +360,6 @@
     </div>
 
 
-    <!-- <div *ngIf=" !mostrarFormulario">
-      <div class="row">
-        <div class="col"></div>
-        <div class="col-md-7">
-          <div class="card">
-            <div class="card-header">
-              <img class="card-img-top" src="/assets/img/reject.png" alt="reject" />
-            </div>
-            <div class="card-body">
-              <p class="card-text text-center">
-                {{ mensaje }}
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary me-md-2" (click)="modificarRegistro()" type="button">Completar informacion</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col"></div>
-      </div>
-    </div>-->
-
-  </div>
 
 </mat-drawer-container>
 

@@ -121,6 +121,7 @@ export class RegisAsiComponent implements OnInit, AfterContentInit {
   direccion: string = '';
   coords: any;
   marcadores: any;
+  dataImg: any = {};
   constructor(
     public postService:PostService,
     public formBuilder:FormBuilder,
@@ -150,11 +151,12 @@ export class RegisAsiComponent implements OnInit, AfterContentInit {
     
     
     // this.getDataFirebase(); 
-    // this.cargarinfo();
+    
     this.rool=this._cookie.get('tipo');
     setTimeout(() => {
       this.mapa();
     }, 400);
+    this.cargarinfo();
   }
   
   ngAfterContentInit(): void {
@@ -628,73 +630,18 @@ export class RegisAsiComponent implements OnInit, AfterContentInit {
     this.postService.getPostByUid(this.uuid)
     .subscribe((resp: any) => {
       
-      if(!resp.empty){
-        this.comprobarVacio = true;
-        for(let f of resp.docs){
-          
-          this.idDoc = f.id;
-          this.data = f.data();
-          this._auth.insertName()
-          .subscribe((resp) =>{
-            this.nombre = resp.displayName;
-            this.firstFormGroup.setValue({
-              name: f.data().name,
-              address: f.data().address,
-              email: f.data().email,
-              fono: f.data().fono,
-              cedula: f.data().cedula
-            });
-            this.nombre = resp.displayName;
-            this.imagen = resp.photoURL;
-            this.imagen = resp.photoURL ? resp.photoURL : '';
-          });
-          this.misionGroup.setValue({
-            mision: f.data()?.mision ? f.data()?.mision : '',
-            vision: f.data()?.vision ? f.data()?.vision : ''
-          })
-      
-          
-          
-          
-          this.horaDesde = f.data()?.horaDesde ?f.data()?.horaDesde : '' ;
-          this.horaHasta = f.data()?.horaHasta?f.data()?.horaHasta : '';
-         this.fourthFormGroup.setValue({
-          img: '',
-          doc: ''
-         });
-  
-         /* this.cantidadPersonalFormGroup.setValue({
-          cantidadAlimentacion: f.data()?.cantidadAlimentacion ? f.data()?.cantidadAlimentacion: '',
-          cantidadTransporte: f.data()?.cantidadTransporte ? f.data()?.cantidadTransporte: '',
-          cantidadaseo: f.data()?.cantidadaseo ? f.data()?.cantidadaseo: '',
-          cmedico: f.data()?.cmedico ? f.data()?.cmedico: '',
-          ctera: f.data()?.ctera ? f.data()?.ctera: '',
-          csanitario: f.data()?.csanitario ? f.data()?.csanitario: '',
-          ccomodidad: f.data()?.ccomodidad ? f.data()?.ccomodidad: '',
-          catencion: f.data()?.catencion ? f.data()?.catencion: '',
-          ccomplementarios: f.data()?.ccomplementarios ? f.data()?.ccomplementarios: '',
-        }) */
-         
-  
-        //  
-         
-         /* this.fourthFormGroup.setValue({
-           alimentacion: f.data().alimentacion,
-           aseo: f.data().aseo
-         }) */
-        }
+      if(resp.empty){
+        
+        
+        this.dataImg = this._auth.insertCorreoAuth().currentUser;
+        
       }
       
     });
   }
 
   modificarRegistro(){
-    /* his._post.updateModificarRechazar(true, this.idDoc)
-    .then((resp) =>{
-      this.getDataFirebase();
-      this.cargarinfo();
-    })
-    .catch((erro) => {}); */
+    
   }
 
   /* validar cedula */
