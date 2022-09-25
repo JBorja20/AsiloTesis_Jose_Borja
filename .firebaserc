@@ -1,7 +1,8 @@
 {
   "projects": {
     "casaesperanzaweb": "casaesperanzaweb",
-    "default": "casaesperanzaweb"
+    "default": "casaesperanzaweb",
+    "casaesperanza": "casaesperanzaweb"
   },
   "targets": {},
   "etags": {}
