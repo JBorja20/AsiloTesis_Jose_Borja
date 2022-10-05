@@ -12,7 +12,7 @@ Trabajo Final Previa a la btención del Título Profecional
 
 - Informe Técnico ["Descargar"]( https://drive.google.com/file/d/1FqdDFqOFH-h3lHVoqQdKxT1vQ5WiX0vd/view?usp=sharing)
 
-- Informe Técnico ["Descargar"](https://drive.google.com/file/d/1LusA7vBg03r1zypxXDK6tk_4GVYO-k6U/view?usp=sharing)
+- Informe Técnico ["Descargar"](https://drive.google.com/file/d/171qh-lPejIs6aHNVz-sVxQQBEdWt6V3D/view?usp=sharing)
 
 
 - FA-234  ["Descargar"](https://drive.google.com/file/d/1HmVoXfFF6DeqT2ynNofoFmFCH59sbjw_/view?usp=sharing)
