@@ -10,7 +10,6 @@ Trabajo Final Previa a la btención del Título Profecional
    
 ## Documentacion 📙
 
-- Informe Técnico ["Descargar"]( https://drive.google.com/file/d/1FqdDFqOFH-h3lHVoqQdKxT1vQ5WiX0vd/view?usp=sharing)
 
 - Informe Técnico ["Descargar"](https://drive.google.com/file/d/171qh-lPejIs6aHNVz-sVxQQBEdWt6V3D/view?usp=sharing)
 
