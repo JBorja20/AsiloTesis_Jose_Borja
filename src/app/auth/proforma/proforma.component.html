@@ -447,17 +447,10 @@
                                              Total por hijos
                                         </th>
                                         <td *ngIf="!sumaTotalSteps?.sumaAdicional && sumaTotalSteps?.hijos">
-<<<<<<< HEAD
                                              $ {{ (sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaCognitivo) / sumaTotalSteps.hijos }}
                                         </td>
                                         <td *ngIf="sumaTotalSteps?.sumaAdicional && sumaTotalSteps?.hijos">
                                              $ {{ (sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaServiciosMedicos + sumaTotalSteps.sumaCognitivo + sumaTotalSteps.sumaAdicional) / sumaTotalSteps.hijos }}
-=======
-                                             $ {{ (sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaCognitivo) / sumaTotalSteps.hijos | number:'1.2-3' }}
-                                        </td>
-                                        <td *ngIf="sumaTotalSteps?.sumaAdicional && sumaTotalSteps?.hijos">
-                                             $ {{ (sumaTotalSteps?.sumaUbicacion + sumaTotalSteps?.sumaHabitacion + sumaTotalSteps?.sumaAmoblado + sumaTotalSteps?.sumaCuidadoFisico + sumaTotalSteps.sumaServiciosMedicos + sumaTotalSteps.sumaCognitivo + sumaTotalSteps.sumaAdicional) / sumaTotalSteps.hijos | number:'1.2-2' }}
->>>>>>> 1ccd82b (correciones de tesis)
                                         </td>
                                    </tr>
                               </tfoot>
